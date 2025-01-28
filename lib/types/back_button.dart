@@ -1,6 +1,6 @@
 import 'dart:js_interop';
 
-import 'package:telegram_miniapp/telegram_miniapp.dart';
+import '../telegram_miniapp.dart';
 
 const _backButtonPath = "$webAppPath.BackButton";
 
