@@ -2,7 +2,7 @@ enum PopupButtonType {
   defaultType,
   ok,
   close,
-  cansel,
+  cancel,
   destructive;
 
   static PopupButtonType fromName(String name) {
@@ -13,8 +13,8 @@ enum PopupButtonType {
         return PopupButtonType.ok;
       case "close":
         return PopupButtonType.close;
-      case "cansel":
-        return PopupButtonType.cansel;
+      case "cancel":
+        return PopupButtonType.cancel;
       case "destructive":
         return PopupButtonType.destructive;
       default:
