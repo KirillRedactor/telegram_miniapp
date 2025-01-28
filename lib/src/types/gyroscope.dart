@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:async/async.dart';
-import '../../telegram_miniapp.dart';
+import '../../flutter_telegram_miniapp.dart';
 
 part 'gyroscope_start_params.dart';
 

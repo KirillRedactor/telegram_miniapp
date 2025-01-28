@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-part of '../../telegram_miniapp.dart';
+part of '../../flutter_telegram_miniapp.dart';
 
 @JSExport()
 class _OpenLinkOptions {

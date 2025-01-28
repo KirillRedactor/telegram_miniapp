@@ -1,4 +1,4 @@
-part of '../telegram_miniapp.dart';
+part of '../flutter_telegram_miniapp.dart';
 
 @JS("window.Telegram")
 external JSAny? get _window;
