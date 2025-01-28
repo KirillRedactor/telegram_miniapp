@@ -1,5 +1,5 @@
 
-# flutter_telegram_miniapp
+# Flutter Telegram Miniapp
 
 A Flutter package for interacting with the Telegram Mini Apps API.
 
