@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:js_interop';
 
-import 'package:async/async.dart';
 import '../enums/biometric_type.dart';
 import '../../flutter_telegram_miniapp.dart';
 
@@ -66,11 +65,11 @@ class BiometricManager {
   void init({void Function()? callback}) => _init(callback?.toJS);
 
   Future<bool> initAsync() async {
-    StreamController<bool> streamController = StreamController();
-    void callback() => streamController.add(true);
+    Completer<bool> completer = Completer();
+    void callback() => completer.complete(true);
 
     _init(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void requestAccess(
@@ -80,11 +79,11 @@ class BiometricManager {
 
   Future<bool> requestAccessAsync(
       {required BiometricRequestAccessParams params}) async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean result) => streamController.add(result.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _requestAccess(params._toExt, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void authenticate({
@@ -95,12 +94,12 @@ class BiometricManager {
 
   Future<(bool, String?)> authenticateAsync(
       {required BiometricAuthenticateParams params}) async {
-    StreamController<(bool, String?)> streamController = StreamController();
+    Completer<(bool, String?)> completer = Completer();
     void callback(JSBoolean result, JSString? biometricToken) =>
-        streamController.add((result.toDart, biometricToken?.toDart));
+        completer.complete((result.toDart, biometricToken?.toDart));
 
     _authenticate(params._toExt, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void updateBiometricToken(
@@ -108,11 +107,11 @@ class BiometricManager {
       _updateBiometricToken(token.toJS, callback?.toJS);
 
   Future<bool> updateBiometricTokenAsync({required String token}) async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean result) => streamController.add(result.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _updateBiometricToken(token.toJS, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void openSettings() => _openSettings();

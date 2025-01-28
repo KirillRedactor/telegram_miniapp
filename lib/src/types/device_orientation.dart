@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:js_interop';
 
-import 'package:async/async.dart';
 import '../../flutter_telegram_miniapp.dart';
 
 part 'device_orientation_start_params.dart';
@@ -46,20 +45,20 @@ class DeviceOrientation {
 
   Future<bool> startAsync(
       {required DeviceOrientationStartParams params}) async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean result) => streamController.add(result.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _start(params._toExt, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void stop({void Function(bool result)? callback}) => _stop(callback?.toJS);
 
   Future<bool> stopAsync() async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean result) => streamController.add(result.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _stop(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 }
