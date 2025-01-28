@@ -1,4 +1,4 @@
-part of '../../telegram_miniapp.dart';
+part of '../../flutter_telegram_miniapp.dart';
 
 /// This object describes additional settings for setting an emoji status.
 ///

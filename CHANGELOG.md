@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3
+
+* Fixed some problems
+
 ## 0.0.2
 
 * Added example project
