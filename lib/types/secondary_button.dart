@@ -1,9 +1,9 @@
 import 'dart:js_interop';
 import 'dart:ui';
 
-import 'package:telegram_miniapp/enums/bottom_button_position.dart';
-import 'package:telegram_miniapp/telegram_miniapp.dart';
-import 'package:telegram_miniapp/types/bottom_button.dart';
+import '../enums/bottom_button_position.dart';
+import '../telegram_miniapp.dart';
+import '../types/bottom_button.dart';
 
 const _secondaryButtonPath = "$webAppPath.SecondaryButton";
 

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:async/async.dart';
-import 'package:telegram_miniapp/telegram_miniapp.dart';
+import '../telegram_miniapp.dart';
 
 part './device_orientation_start_params.dart';
 

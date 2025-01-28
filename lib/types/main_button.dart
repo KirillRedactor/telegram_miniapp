@@ -1,8 +1,8 @@
 import 'dart:js_interop';
 import 'dart:ui';
 
-import 'package:telegram_miniapp/telegram_miniapp.dart';
-import 'package:telegram_miniapp/types/bottom_button.dart';
+import '../telegram_miniapp.dart';
+import '../types/bottom_button.dart';
 
 const _mainButtonPath = "$webAppPath.MainButton";
 

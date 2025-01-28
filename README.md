@@ -1,5 +1,5 @@
 
-# telegram_miniapp
+# flutter_telegram_miniapp
 
 A Flutter package for interacting with the Telegram Mini Apps API.
 
@@ -23,20 +23,20 @@ This package provides a convenient way to develop Telegram Mini Apps using Flutt
 
 ## Getting started
 
-To use this package, add `telegram_miniapp` as a dependency in your `pubspec.yaml` file:
+To use this package, add `flutter_telegram_miniapp` as a dependency in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-  telegram_miniapp: ^latest_version
+  flutter_telegram_miniapp: ^latest_version
 ```
 
 
 Then, import it into your Dart code:
 
 ```dart
-import 'package:telegram_miniapp/telegram_miniapp.dart';
+import 'package:flutter_telegram_miniapp/telegram_miniapp.dart';
 ```
 
 ## Usage

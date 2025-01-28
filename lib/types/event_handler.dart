@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:js_interop';
 
-import 'package:telegram_miniapp/telegram_miniapp.dart';
+import '../telegram_miniapp.dart';
 
 @JS("$webAppPath.onEvent")
 external void _onEvent(JSString eventType, JSFunction eventHandler);

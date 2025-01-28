@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:async/async.dart';
-import 'package:telegram_miniapp/enums/biometric_type.dart';
-import 'package:telegram_miniapp/telegram_miniapp.dart';
+import '../enums/biometric_type.dart';
+import '../telegram_miniapp.dart';
 
 part './biometric_request_access_params.dart';
 part './biometric_authenticate_params.dart';
