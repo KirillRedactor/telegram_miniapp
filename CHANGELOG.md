@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+* Fixed little problem
+
 ## 0.0.4
 
 * Removed package 'async' from pubspec.yaml
