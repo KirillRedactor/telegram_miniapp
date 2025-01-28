@@ -1,6 +1,6 @@
 import 'dart:js_interop';
 
-import '../../telegram_miniapp.dart';
+import '../../flutter_telegram_miniapp.dart';
 
 const _settingsButtonPath = "$webAppPath.SettingsButton";
 

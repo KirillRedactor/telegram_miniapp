@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of '../../telegram_miniapp.dart';
+part of '../../flutter_telegram_miniapp.dart';
 
 /// This object represents the system-defined safe area insets, providing padding
 /// values to ensure content remains within visible boundaries, avoiding overlap

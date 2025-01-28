@@ -2,7 +2,7 @@ import 'dart:js_interop';
 
 import '../enums/haptic_feedback_impact_style.dart';
 import '../enums/haptic_feedback_notification_type.dart';
-import '../../telegram_miniapp.dart';
+import '../../flutter_telegram_miniapp.dart';
 
 const _hapticFeedbackPath = "$webAppPath.HapticFeedback";
 

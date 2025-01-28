@@ -1,4 +1,4 @@
-part of '../../telegram_miniapp.dart';
+part of '../../flutter_telegram_miniapp.dart';
 
 /// Mini Apps can [adjust the appearance](https://core.telegram.org/bots/webapps#color-schemes)
 /// of the interface to match the Telegram user's app in real time. This object contains the

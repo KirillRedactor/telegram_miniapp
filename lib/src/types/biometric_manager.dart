@@ -3,7 +3,7 @@ import 'dart:js_interop';
 
 import 'package:async/async.dart';
 import '../enums/biometric_type.dart';
-import '../../telegram_miniapp.dart';
+import '../../flutter_telegram_miniapp.dart';
 
 part 'biometric_request_access_params.dart';
 part 'biometric_authenticate_params.dart';

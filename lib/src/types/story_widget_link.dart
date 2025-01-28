@@ -1,4 +1,4 @@
-part of '../../telegram_miniapp.dart';
+part of '../../flutter_telegram_miniapp.dart';
 
 /// This object describes a widget link to be included in the story.
 ///

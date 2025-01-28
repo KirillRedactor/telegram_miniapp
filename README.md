@@ -36,7 +36,7 @@ dependencies:
 Then, import it into your Dart code:
 
 ```dart
-import 'package:flutter_telegram_miniapp/telegram_miniapp.dart';
+import 'package:flutter_telegram_miniapp/flutter_telegram_miniapp.dart';
 ```
 
 ## Usage

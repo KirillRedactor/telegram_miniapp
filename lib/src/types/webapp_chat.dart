@@ -1,4 +1,4 @@
-part of '../../telegram_miniapp.dart';
+part of '../../flutter_telegram_miniapp.dart';
 
 class WebAppChat {
   final int id;

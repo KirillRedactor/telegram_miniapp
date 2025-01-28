@@ -7,7 +7,7 @@ import 'dart:ui';
 import 'package:async/async.dart';
 import 'package:flutter/rendering.dart';
 
-import './telegram_miniapp.dart';
+import 'flutter_telegram_miniapp.dart';
 import 'src/types/event_handler.dart';
 
 export 'src/extensions/color_hex_extension.dart';
