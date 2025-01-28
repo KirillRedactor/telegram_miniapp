@@ -564,12 +564,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<HomeScreenCheckedStatus> checkHomeScreenStatusAsync() async {
-    StreamController<String> streamController = StreamController();
-    void callbackFunction(JSString ext) => streamController.add(ext.toDart);
+    Completer<String> completer = Completer();
+    void callbackFunction(JSString ext) => completer.complete(ext.toDart);
 
     _checkHomeScreenStatus(callbackFunction.toJS);
-    return HomeScreenCheckedStatus.fromName(
-        await StreamQueue(streamController.stream).next);
+    return HomeScreenCheckedStatus.fromName(await completer.future);
   }
 
   /// A method used to send data to the bot. When this method is called, a service
@@ -648,12 +647,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<InvoiceResult> openInvoiceAsync({required String url}) async {
-    StreamController<String> streamController = StreamController();
-    void callback(JSString result) => streamController.add(result.toDart);
+    Completer<String> completer = Completer();
+    void callback(JSString result) => completer.complete(result.toDart);
 
     _openInvoice(url.toJS, callback.toJS);
-    return InvoiceResult.fromName(
-        await StreamQueue(streamController.stream).next);
+    return InvoiceResult.fromName(await completer.future);
   }
 
   /// `Bot API 7.8+` A method that opens the native story editor with the media
@@ -688,11 +686,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> shareMessageAsync({required String msgId}) async {
-    StreamController<bool> streamController = StreamController();
-    void callbackFunction(JSBoolean ext) => streamController.add(ext.toDart);
+    Completer<bool> completer = Completer();
+    void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
 
     _shareMessage(msgId.toJS, callbackFunction.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// Bot API 8.0+ A method that opens a dialog allowing the user to set the
@@ -734,11 +732,11 @@ class WebApp {
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> setEmojiStatusAsync(
       {required String customEmojiId, EmojiStatusParams? params}) async {
-    StreamController<bool> streamController = StreamController();
-    void callbackFunction(JSBoolean ext) => streamController.add(ext.toDart);
+    Completer<bool> completer = Completer();
+    void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
 
     _setEmojiStatus(customEmojiId.toJS, params?._toExt, callbackFunction.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 8.0+` A method that shows a native popup requesting permission for
@@ -757,11 +755,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> requestEmojiStatusAccessAsync() async {
-    StreamController<bool> streamController = StreamController();
-    void callbackFunction(JSBoolean ext) => streamController.add(ext.toDart);
+    Completer<bool> completer = Completer();
+    void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
 
     _requestEmojiStatusAccess(callbackFunction.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 8.0+` A method that displays a native popup prompting the user to
@@ -786,11 +784,11 @@ class WebApp {
   Future<bool> downloadFileAsync({
     required DownloadFileParams params,
   }) async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean ext) => streamController.add(ext.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
     _downloadFile(params._toExt, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 6.2+` A method that shows a native popup described by the *params*
@@ -817,11 +815,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<String?> showPopupAsync({required PopupParams params}) async {
-    StreamController<String?> streamController = StreamController();
-    void callback(JSString? buttonId) => streamController.add(buttonId?.toDart);
+    Completer<String?> completer = Completer();
+    void callback(JSString? buttonId) => completer.complete(buttonId?.toDart);
 
     _showPopup(params._toExt, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 6.2+` A method that shows *message* in a simple alert with a 'Close'
@@ -837,11 +835,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> showAlertAsync({required String message}) async {
-    StreamController<bool> streamController = StreamController();
-    void callback() => streamController.add(true);
+    Completer<bool> completer = Completer();
+    void callback() => completer.complete(true);
 
     _showAlert(message.toJS, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 6.2+` A method that shows *message* in a simple confirmation window
@@ -861,14 +859,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> showConfirmAsync({required String message}) async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean ext) => streamController.add(ext.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
-    _showConfirm(
-      message.toJS,
-      callback.toJS,
-    );
-    return await StreamQueue(streamController.stream).next;
+    _showConfirm(message.toJS, callback.toJS);
+    return await completer.future;
   }
 
   /// `Bot API 6.4+` A method that shows a native popup for scanning a QR code
@@ -906,10 +901,10 @@ class WebApp {
   Future<String> showScanQrPopupAsync(
       {ScanQrPopupParams? params,
       bool Function(String result)? condition}) async {
-    StreamController<String> streamController = StreamController();
+    Completer<String> completer = Completer();
     bool callback(JSString result) {
       if (condition == null || condition(result.toDart)) {
-        streamController.add(result.toDart);
+        completer.complete(result.toDart);
         return true;
       } else {
         return false;
@@ -917,7 +912,7 @@ class WebApp {
     }
 
     _showScanQrPopup(params?._toExt, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 6.4+` A method that shows a native popup for scanning a QR code
@@ -973,11 +968,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<String?> readTextFromClipboardAsync() async {
-    StreamController<String?> streamController = StreamController();
-    void callback(JSString? result) => streamController.add(result?.toDart);
+    Completer<String?> completer = Completer();
+    void callback(JSString? result) => completer.complete(result?.toDart);
 
     _readTextFromClipboard(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 6.9+` A method that shows a native popup requesting permission
@@ -996,11 +991,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> requestWriteAccessAsync() async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean result) => streamController.add(result.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _requestWriteAccess(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// `Bot API 6.9+` A method that shows a native popup prompting the user for
@@ -1018,11 +1013,11 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   Future<bool> requestContactAsync() async {
-    StreamController<bool> streamController = StreamController();
-    void callback(JSBoolean result) => streamController.add(result.toDart);
+    Completer<bool> completer = Completer();
+    void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _requestContact(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   /// A method that informs the Telegram app that the Mini App is ready to be

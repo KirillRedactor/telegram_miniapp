@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:js_interop';
 
-import 'package:async/async.dart';
 import '../../flutter_telegram_miniapp.dart';
 
 part 'location_data.dart';
@@ -40,11 +39,11 @@ class LocationManager {
 
   void init({void Function()? callback}) => _init(callback?.toJS);
   Future<bool> initAsync() async {
-    StreamController<bool> streamController = StreamController();
-    void callback() => streamController.add(true);
+    Completer<bool> completer = Completer();
+    void callback() => completer.complete(true);
 
     _init(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void getLocation(
@@ -55,12 +54,12 @@ class LocationManager {
   }
 
   Future<LocationData> getLocationAsync() async {
-    StreamController<LocationData> streamController = StreamController();
+    Completer<LocationData> completer = Completer();
     void callback(_LocationDataExternal ext) =>
-        streamController.add(LocationData.fromExternal(ext));
+        completer.complete(LocationData.fromExternal(ext));
 
     _getLocation(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void openSettings() => _openSettings();

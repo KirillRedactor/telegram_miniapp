@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:js_interop';
 import 'dart:ui';
 
-import 'package:async/async.dart';
 import 'package:flutter/rendering.dart';
 
 import 'flutter_telegram_miniapp.dart';

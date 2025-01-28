@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:js_interop';
 
-import 'package:async/async.dart';
 import '../../flutter_telegram_miniapp.dart';
 
 const _cloudStoragePath = "$webAppPath.CloudStorage";
@@ -36,14 +35,14 @@ class CloudStorage {
 
   Future<bool> setItemAsync(
       {required String key, required String value}) async {
-    StreamController<bool> streamController = StreamController();
+    Completer<bool> completer = Completer();
     void callback(JSString? error, JSBoolean? result) {
       // if (error != null) debugPrint("Error: ${error.toDart}");
-      streamController.add(result?.toDart ?? false);
+      completer.complete(result?.toDart ?? false);
     }
 
     _setItem(key.toJS, value.toJS, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void getItem(
@@ -60,14 +59,14 @@ class CloudStorage {
   }
 
   Future<String?> getItemAsync({required String key}) async {
-    StreamController<String?> streamController = StreamController();
+    Completer<String?> completer = Completer();
     void callback(JSString? error, JSString? result) {
       // if (error != null) debugPrint("Error: ${error.toDart}");
-      streamController.add(result?.toDart);
+      completer.complete(result?.toDart);
     }
 
     _getItem(key.toJS, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void getItems(
@@ -106,14 +105,14 @@ class CloudStorage {
 
   Future<bool> removeItemAsync(
       {required String key, required String value}) async {
-    StreamController<bool> streamController = StreamController();
+    Completer<bool> completer = Completer();
     void callback(JSString? error, JSBoolean? result) {
       // if (error != null) debugPrint("Error: ${error.toDart}");
-      streamController.add(result?.toDart ?? false);
+      completer.complete(result?.toDart ?? false);
     }
 
     _removeItem(key.toJS, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void removeItems(
@@ -128,14 +127,14 @@ class CloudStorage {
 
   Future<bool> removeItemsAsync(
       {required List<String> key, required String value}) async {
-    StreamController<bool> streamController = StreamController();
+    Completer<bool> completer = Completer();
     void callback(JSString? error, JSBoolean? result) {
       // if (error != null) debugPrint("Error: ${error.toDart}");
-      streamController.add(result?.toDart ?? false);
+      completer.complete(result?.toDart ?? false);
     }
 
     _removeItems(key.map((e) => e.toJS).toList().toJS, callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 
   void getKeys({required void Function(List<String>? result)? callback}) {
@@ -150,14 +149,14 @@ class CloudStorage {
   }
 
   Future<List<String>> getKeysAsync() async {
-    StreamController<List<String>> streamController = StreamController();
+    Completer<List<String>> completer = Completer();
     void callback(JSString? error, JSArray<JSString>? result) {
       // if (error != null) debugPrint("Error: ${error.toDart}");
-      streamController
-          .add(result?.toDart.map((e) => e.toDart).toList() ?? <String>[]);
+      completer
+          .complete(result?.toDart.map((e) => e.toDart).toList() ?? <String>[]);
     }
 
     _getKeys(callback.toJS);
-    return await StreamQueue(streamController.stream).next;
+    return await completer.future;
   }
 }
