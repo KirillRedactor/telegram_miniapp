@@ -5,6 +5,8 @@ A Flutter package for interacting with the Telegram Mini Apps API.
 
 This package provides a convenient way to develop Telegram Mini Apps using Flutter. It handles the underlying JavaScript interop, providing you with type-safe Dart classes and methods to access the Telegram Mini Apps API.
 
+>Ready for compilation in WASM
+
 ## Features
 
 -   **Access to Web App API:** Provides the `WebApp` singleton class for accessing Telegram Web App API methods.
