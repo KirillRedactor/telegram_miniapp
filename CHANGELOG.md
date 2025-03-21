@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.6
+
+* Fixed a critical error in the event handler
+* Added documentation for BackButton, BottomButton, CloudStorage, ContentSafeAreaInsert, HapticFeedback, LocationData, LocationManager, MainButton.
+* Fixed other minor bugs
+
 ## 0.0.5
 
 * Fixed little problem

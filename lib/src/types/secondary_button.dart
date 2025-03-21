@@ -94,6 +94,12 @@ class SecondaryButton implements BottomButton {
   @override
   bool get hasShineEffect => _hasShineEffect;
 
+  /// Bot API 7.10+ Position of the secondary button. Not defined for the main button. It applies only if both the main and secondary buttons are visible. Set to left by default.
+  /// Supported values:
+  /// - left, displayed to the left of the main button,
+  /// - right, displayed to the right of the main button,
+  /// - top, displayed above the main button,
+  /// - bottom, displayed below the main button.
   BottomButtonPosition get position => BottomButtonPosition.fromName(_position);
 
   @override
@@ -118,6 +124,22 @@ class SecondaryButton implements BottomButton {
   @override
   void hideProgress() => _hideProgress();
 
+  /// A method to set the button parameters. The *params* parameter is an object
+  /// containing one or several fields that need to be changed:
+  ///
+  /// **text** - button text;
+  ///
+  /// **color** - button color;
+  ///
+  /// **text_color** - button text color;
+  ///
+  /// **has_shine_effect** - Bot API 7.10+ enable shine effect;
+  ///
+  /// **position** - position of the secondary button;
+  ///
+  /// **is_active** - enable the button;
+  ///
+  /// **is_visible** - show the button.
   void setParams({
     String? text,
     Color? color,

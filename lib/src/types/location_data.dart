@@ -26,8 +26,7 @@ class LocationData {
   });
 
   // ignore: library_private_types_in_public_api
-  factory LocationData.fromExternal(_LocationDataExternal ext) =>
-      LocationData._(
+  factory LocationData.fromExternal(LocationDataExternal ext) => LocationData._(
         latitude: ext.latitude,
         longitude: ext.longitude,
         altitude: ext.altitude,
@@ -43,7 +42,7 @@ class LocationData {
   //     createJSInteropWrapper<LocationData>(this) as LocationDataExternal;
 }
 
-extension type _LocationDataExternal(JSObject _) implements JSObject {
+extension type LocationDataExternal(JSObject _) implements JSObject {
   external double latitude;
   external double longitude;
   external double? altitude;
