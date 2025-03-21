@@ -112,7 +112,22 @@ class MainButton implements BottomButton {
   @override
   void hideProgress() => _hideProgress();
 
+  /// A method to set the button parameters. The *params* parameter is an object
+  /// containing one or several fields that need to be changed:
+  ///
+  /// **text** - button text;
+  ///
+  /// **color** - button color;
+  ///
+  /// **text_color** - button text color;
+  ///
+  /// **has_shine_effect** - Bot API 7.10+ enable shine effect;
+  ///
+  /// **is_active** - enable the button;
+  ///
+  /// **is_visible** - show the button.
   void setParams({
+    /// Some text
     String? text,
     Color? color,
     String? colorRaw,

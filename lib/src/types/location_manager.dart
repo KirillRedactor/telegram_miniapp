@@ -48,14 +48,14 @@ class LocationManager {
 
   void getLocation(
       {required void Function(LocationData locationData) callback}) {
-    void callbackFunction(_LocationDataExternal ext) =>
+    void callbackFunction(LocationDataExternal ext) =>
         callback(LocationData.fromExternal(ext));
     _getLocation(callbackFunction.toJS);
   }
 
   Future<LocationData> getLocationAsync() async {
     Completer<LocationData> completer = Completer();
-    void callback(_LocationDataExternal ext) =>
+    void callback(LocationDataExternal ext) =>
         completer.complete(LocationData.fromExternal(ext));
 
     _getLocation(callback.toJS);

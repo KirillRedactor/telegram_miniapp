@@ -20,6 +20,10 @@ external void _removeItems(JSArray<JSString> keys, JSFunction? callback);
 @JS("$_cloudStoragePath.getKeys")
 external void _getKeys(JSFunction callback);
 
+/// This object controls the cloud storage. Each bot can store up to 1024 items
+/// per user in the cloud storage.
+///
+/// [API Reference](https://core.telegram.org/bots/webapps#cloudstorage)
 class CloudStorage {
   void setItem(
       {required String key,

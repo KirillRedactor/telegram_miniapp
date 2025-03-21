@@ -155,8 +155,8 @@ class EventHandler {
             .add(WebApp().locationManager)).toJS);
     _onEvent(
         "locationRequested".toJS,
-        (() async => _locationRequestedStreamController
-            .add(await WebApp().locationManager.getLocationAsync())).toJS);
+        ((LocationDataExternal ext) => _locationRequestedStreamController
+            .add(LocationData.fromExternal(ext))).toJS);
 
     _onEvent("shareMessageSent".toJS,
         (() => _shareMessageSentStreamController.add(true)).toJS);

@@ -125,7 +125,7 @@ if(hasContact){
 
 ## Issues and Contribution
 
-If you encounter any issues or have suggestions for improvements, please feel free to open an issue on [GitHub](https://github.com/your-github-username/telegram_miniapp). Contributions are welcome!
+If you encounter any issues or have suggestions for improvements, please feel free to open an issue on [GitHub](https://github.com/KirillRedactor/telegram_miniapp/issues). Contributions are welcome!
 
 ## License
 
