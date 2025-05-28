@@ -26,7 +26,7 @@ class WebAppUser {
   });
 
   factory WebAppUser._fromExternal(WebAppUserExternal ext) => WebAppUser._(
-        id: ext.id,
+        id: ext.id.toDartInt,
         isBot: ext.isBot ?? false,
         firstName: ext.firstName,
         lastName: ext.lastName,
@@ -37,11 +37,16 @@ class WebAppUser {
         allowsWriteToPm: ext.allowsWriteToPm ?? false,
         photoUrl: ext.photoUrl,
       );
+
+  @override
+  String toString() {
+    return 'WebAppUser(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, allowsWriteToPm: $allowsWriteToPm, photoUrl: $photoUrl)';
+  }
 }
 
 extension type WebAppUserExternal(JSObject _) implements JSObject {
   @JS("id")
-  external int id;
+  external JSNumber id;
   @JS("is_bot")
   external bool? isBot;
   @JS("first_name")

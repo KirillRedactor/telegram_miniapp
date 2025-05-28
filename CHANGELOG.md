@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.7
+
+* Fixed a critical error with number conversion 
+
 ## 0.0.6
 
 * Fixed a critical error in the event handler

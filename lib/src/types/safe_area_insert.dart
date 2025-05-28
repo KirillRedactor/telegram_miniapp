@@ -28,16 +28,16 @@ class SafeAreaInsert {
 
   factory SafeAreaInsert._fromExternal(SafeAreaInsertExternal ext) =>
       SafeAreaInsert(
-        top: ext.top,
-        bottom: ext.bottom,
-        left: ext.left,
-        right: ext.right,
+        top: ext.top.toDartInt,
+        bottom: ext.bottom.toDartInt,
+        left: ext.left.toDartInt,
+        right: ext.right.toDartInt,
       );
 }
 
 extension type SafeAreaInsertExternal(JSObject _) implements JSObject {
-  external int top;
-  external int bottom;
-  external int left;
-  external int right;
+  external JSNumber top;
+  external JSNumber bottom;
+  external JSNumber left;
+  external JSNumber right;
 }

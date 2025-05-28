@@ -26,8 +26,8 @@ class WebAppInitData {
             : null,
         chatInstance: ext.chatInstance,
         startParam: ext.startParam,
-        canSendAfter: ext.canSendAfter,
-        authDate: ext.authDate,
+        canSendAfter: ext.canSendAfter?.toDartInt,
+        authDate: ext.authDate.toDartInt,
         hash: ext.hash,
         signature: ext.signature,
       );
@@ -45,6 +45,11 @@ class WebAppInitData {
     required this.hash,
     required this.signature,
   });
+
+  @override
+  String toString() {
+    return 'WebAppInitData(queryId: $queryId, user: $user, reveiver: $reveiver, chat: $chat, chatType: $chatType, chatInstance: $chatInstance, startParam: $startParam, canSendAfter: $canSendAfter, authDate: $authDate, hash: $hash, signature: $signature)';
+  }
 }
 
 extension type WebAppInitDataExternal(JSObject _) implements JSObject {
@@ -60,9 +65,9 @@ extension type WebAppInitDataExternal(JSObject _) implements JSObject {
   @JS("start_param")
   external String? startParam;
   @JS("can_send_after")
-  external int? canSendAfter;
+  external JSNumber? canSendAfter;
   @JS("auth_date")
-  external int authDate;
+  external JSNumber authDate;
   external String hash;
   external String signature;
 }

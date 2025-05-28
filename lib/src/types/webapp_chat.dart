@@ -8,7 +8,7 @@ class WebAppChat {
   final String? photoUrl;
 
   factory WebAppChat._fromExternal(WebAppChatExternal ext) => WebAppChat(
-        id: ext.id,
+        id: ext.id.toDartInt,
         type: WebAppChatType.fromName(ext.type),
         title: ext.title,
         username: ext.username,
@@ -22,10 +22,15 @@ class WebAppChat {
     this.username,
     this.photoUrl,
   });
+
+  @override
+  String toString() {
+    return 'WebAppChat(id: $id, type: $type, title: $title, username: $username, photoUrl: $photoUrl)';
+  }
 }
 
 extension type WebAppChatExternal(JSObject _) implements JSObject {
-  external int id;
+  external JSNumber id;
   external String type;
   external String title;
   external String? username;
