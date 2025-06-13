@@ -1,6 +1,6 @@
 name: flutter_telegram_miniapp
 description: "A Flutter package providing easy access to the Telegram Mini Apps API, enabling you to build interactive experiences within Telegram."
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/KirillRedactor/telegram_miniapp
 issue_tracker: https://github.com/KirillRedactor/telegram_miniapp/issues
 
@@ -16,4 +16,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0

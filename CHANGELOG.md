@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.8
+
+* Implemented support for Bot API 9.0
+* Implemented DeviceStorage and SecureStorage
+* Fixed error with authDate in initDataUnsafe
+
 ## 0.0.7
 
 * Fixed a critical error with number conversion 

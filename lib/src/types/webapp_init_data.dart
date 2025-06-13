@@ -13,6 +13,9 @@ class WebAppInitData {
   final String hash;
   final String signature;
 
+  DateTime get authDataDateTime =>
+      DateTime.fromMillisecondsSinceEpoch(authDate * 1000);
+
   factory WebAppInitData._fromExternal(WebAppInitDataExternal ext) =>
       WebAppInitData(
         queryId: ext.queryId,
@@ -27,7 +30,7 @@ class WebAppInitData {
         chatInstance: ext.chatInstance,
         startParam: ext.startParam,
         canSendAfter: ext.canSendAfter?.toDartInt,
-        authDate: ext.authDate.toDartInt,
+        authDate: int.tryParse(ext.authDate) ?? 0,
         hash: ext.hash,
         signature: ext.signature,
       );
@@ -67,7 +70,7 @@ extension type WebAppInitDataExternal(JSObject _) implements JSObject {
   @JS("can_send_after")
   external JSNumber? canSendAfter;
   @JS("auth_date")
-  external JSNumber authDate;
+  external String authDate;
   external String hash;
   external String signature;
 }

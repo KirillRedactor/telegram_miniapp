@@ -32,6 +32,14 @@ dependencies:
   flutter_telegram_miniapp: ^latest_version
 ```
 
+And add this line in `web/index.html`
+
+```html
+<head>
+  ...
+    <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
+</head>
+```
 
 Then, import it into your Dart code:
 
