@@ -13,7 +13,7 @@ class WebAppInitData {
   final String hash;
   final String signature;
 
-  DateTime get authDataDateTime =>
+  DateTime get authDateDateTime =>
       DateTime.fromMillisecondsSinceEpoch(authDate * 1000);
 
   factory WebAppInitData._fromExternal(WebAppInitDataExternal ext) =>
@@ -51,7 +51,7 @@ class WebAppInitData {
 
   @override
   String toString() {
-    return 'WebAppInitData(queryId: $queryId, user: $user, reveiver: $reveiver, chat: $chat, chatType: $chatType, chatInstance: $chatInstance, startParam: $startParam, canSendAfter: $canSendAfter, authDate: $authDate, hash: $hash, signature: $signature)';
+    return 'WebAppInitData(queryId: $queryId, user: $user, reveiver: $reveiver, chat: $chat, chatType: $chatType, chatInstance: $chatInstance, startParam: $startParam, canSendAfter: $canSendAfter, authDate: $authDate ($authDateDateTime), hash: $hash, signature: $signature)';
   }
 }
 
