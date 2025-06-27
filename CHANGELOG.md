@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.9
+
+* Fixed an error in exporting enums
+
 ## 0.0.8
 
 * Implemented support for Bot API 9.0
