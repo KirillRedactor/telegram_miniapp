@@ -141,6 +141,9 @@ external void _requestEmojiStatusAccess(JSFunction? callback);
 external void _downloadFile(DownloadFileParamsExternal params,
     [JSFunction? callback]);
 
+@JS("$webAppPath.hideKeyboard")
+external void _hideKeyboard();
+
 @JS("$webAppPath.showPopup")
 external void _showPopup(PopupParamsExternal params, JSFunction? callback);
 
@@ -790,6 +793,12 @@ class WebApp {
     _downloadFile(params._toExt, callback.toJS);
     return await completer.future;
   }
+
+  /// `Bot API 9.1+` A method that hides the on-screen keyboard, if it is currently visible.
+  /// Does nothing if the keyboard is not active.
+  ///
+  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+  void hideKeyboard() => _hideKeyboard();
 
   /// `Bot API 6.2+` A method that shows a native popup described by the *params*
   /// argument of the type [PopupParams](https://core.telegram.org/bots/webapps#popupparams).

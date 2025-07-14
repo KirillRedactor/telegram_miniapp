@@ -1,7 +1,6 @@
 import 'dart:js_interop';
 import 'dart:ui';
 
-import '../enums/bottom_button_position.dart';
 import '../../flutter_telegram_miniapp.dart';
 import 'bottom_button.dart';
 

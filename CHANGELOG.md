@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.10
+
+* Implemented support for **Bot API 9.1**
+    * Added the method *hideKeyboard* to the class WebApp.
+* Fixed an error during static analysis
+
 ## 0.0.9
 
 * Fixed an error in exporting enums
