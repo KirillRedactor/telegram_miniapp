@@ -6,36 +6,36 @@ part of '../../flutter_telegram_miniapp.dart';
 /// with system UI elements like notches or navigation bars.
 ///
 /// [API Reference](https://core.telegram.org/bots/webapps#safeareainset)
-class SafeAreaInsert {
+class SafeAreaInset {
   /// The top inset in pixels, representing the space to avoid at the top of the screen.
-  final int top;
+  final double top;
 
   /// The bottom inset in pixels, representing the space to avoid at the bottom of the screen.
-  final int bottom;
+  final double bottom;
 
   /// The left inset in pixels, representing the space to avoid on the left side of the screen.
-  final int left;
+  final double left;
 
   /// The right inset in pixels, representing the space to avoid on the right side of the screen.
-  final int right;
+  final double right;
 
-  SafeAreaInsert({
+  SafeAreaInset({
     required this.top,
     required this.bottom,
     required this.left,
     required this.right,
   });
 
-  factory SafeAreaInsert._fromExternal(SafeAreaInsertExternal ext) =>
-      SafeAreaInsert(
-        top: ext.top.toDartInt,
-        bottom: ext.bottom.toDartInt,
-        left: ext.left.toDartInt,
-        right: ext.right.toDartInt,
+  factory SafeAreaInset._fromExternal(SafeAreaInsetExternal ext) =>
+      SafeAreaInset(
+        top: ext.top.toDartDouble,
+        bottom: ext.bottom.toDartDouble,
+        left: ext.left.toDartDouble,
+        right: ext.right.toDartDouble,
       );
 }
 
-extension type SafeAreaInsertExternal(JSObject _) implements JSObject {
+extension type SafeAreaInsetExternal(JSObject _) implements JSObject {
   external JSNumber top;
   external JSNumber bottom;
   external JSNumber left;

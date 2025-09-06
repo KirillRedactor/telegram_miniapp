@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.11
+
+* Fixed error with SafeAreaInset and ContentSafeAreaInset
+
 ## 0.0.10
 
 * Implemented support for **Bot API 9.1**
@@ -23,7 +27,7 @@
 ## 0.0.6
 
 * Fixed a critical error in the event handler
-* Added documentation for BackButton, BottomButton, CloudStorage, ContentSafeAreaInsert, HapticFeedback, LocationData, LocationManager, MainButton.
+* Added documentation for BackButton, BottomButton, CloudStorage, ContentSafeAreaInset, HapticFeedback, LocationData, LocationManager, MainButton.
 * Fixed other minor bugs
 
 ## 0.0.5
