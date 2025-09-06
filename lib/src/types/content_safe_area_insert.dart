@@ -6,41 +6,41 @@ part of '../../flutter_telegram_miniapp.dart';
 /// with Telegram UI elements.
 ///
 /// [API Reference](https://core.telegram.org/bots/webapps#contentsafeareainset)
-class ContentSafeAreaInsert {
+class ContentSafeAreaInset {
   /// The top inset in pixels, representing the space to avoid at the top of
   /// the content area.
-  final int top;
+  final double top;
 
   /// The bottom inset in pixels, representing the space to avoid at the bottom
   /// of the content area.
-  final int bottom;
+  final double bottom;
 
   /// The left inset in pixels, representing the space to avoid on the left side
   /// of the content area.
-  final int left;
+  final double left;
 
   /// The right inset in pixels, representing the space to avoid on the right
   /// side of the content area.
-  final int right;
+  final double right;
 
-  ContentSafeAreaInsert({
+  ContentSafeAreaInset({
     required this.top,
     required this.bottom,
     required this.left,
     required this.right,
   });
 
-  factory ContentSafeAreaInsert._fromExternal(
-          ContentSafeAreaInsertExternal ext) =>
-      ContentSafeAreaInsert(
-        top: ext.top.toDartInt,
-        bottom: ext.bottom.toDartInt,
-        left: ext.left.toDartInt,
-        right: ext.right.toDartInt,
-      );
+  factory ContentSafeAreaInset._fromExternal(
+    ContentSafeAreaInsetExternal ext,
+  ) => ContentSafeAreaInset(
+    top: ext.top.toDartDouble,
+    bottom: ext.bottom.toDartDouble,
+    left: ext.left.toDartDouble,
+    right: ext.right.toDartDouble,
+  );
 }
 
-extension type ContentSafeAreaInsertExternal(JSObject _) implements JSObject {
+extension type ContentSafeAreaInsetExternal(JSObject _) implements JSObject {
   external JSNumber top;
   external JSNumber bottom;
   external JSNumber left;

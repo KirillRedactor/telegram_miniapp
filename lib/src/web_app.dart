@@ -59,10 +59,10 @@ external bool get _isFullscreen;
 external bool get _isOrientationLocked;
 
 @JS("$webAppPath.safeAreaInset")
-external SafeAreaInsertExternal get _safeAreaInsert;
+external SafeAreaInsetExternal get _safeAreaInset;
 
-@JS("$webAppPath.contentSafeAreaInsert")
-external ContentSafeAreaInsertExternal get _contentSafeAreaInsert;
+@JS("$webAppPath.contentSafeAreaInset")
+external ContentSafeAreaInsetExternal get _contentSafeAreaInset;
 
 @JS("$webAppPath.isVersionAtLeast")
 external bool _isVersionAtLeast(JSString version);
@@ -110,12 +110,16 @@ external void _checkHomeScreenStatus([JSFunction? callback]);
 external void _sendData(JSString data);
 
 @JS("$webAppPath.switchInlineQuery")
-external void _switchInlineQuery(JSString query,
-    [JSArray<JSString>? chooseChatTypes]);
+external void _switchInlineQuery(
+  JSString query, [
+  JSArray<JSString>? chooseChatTypes,
+]);
 
 @JS("$webAppPath.openLink")
-external void _openLink(JSString url,
-    [OpenLinkOptionsExternal? tryInstantView]);
+external void _openLink(
+  JSString url, [
+  OpenLinkOptionsExternal? tryInstantView,
+]);
 
 @JS("$webAppPath.openTelegramLink")
 external void _openTelegramLink(JSString url);
@@ -124,22 +128,29 @@ external void _openTelegramLink(JSString url);
 external void _openInvoice(JSString url, [JSFunction? callback]);
 
 @JS("$webAppPath.shareToStory")
-external void _shareToStory(JSString mediaUrl,
-    [StoryShareParamsExternal? storyShareParams]);
+external void _shareToStory(
+  JSString mediaUrl, [
+  StoryShareParamsExternal? storyShareParams,
+]);
 
 @JS("$webAppPath.shareMessage")
 external void _shareMessage(JSString msgId, [JSFunction? callback]);
 
 @JS("$webAppPath.setEmojiStatus")
-external void _setEmojiStatus(JSString customEmojiId,
-    [EmojiStatusParamsExternal? params, JSFunction? callback]);
+external void _setEmojiStatus(
+  JSString customEmojiId, [
+  EmojiStatusParamsExternal? params,
+  JSFunction? callback,
+]);
 
 @JS("$webAppPath.requestEmojiStatusAccess")
 external void _requestEmojiStatusAccess(JSFunction? callback);
 
 @JS("$webAppPath.downloadFile")
-external void _downloadFile(DownloadFileParamsExternal params,
-    [JSFunction? callback]);
+external void _downloadFile(
+  DownloadFileParamsExternal params, [
+  JSFunction? callback,
+]);
 
 @JS("$webAppPath.hideKeyboard")
 external void _hideKeyboard();
@@ -155,7 +166,9 @@ external void _showConfirm(JSString message, JSFunction? callback);
 
 @JS("$webAppPath.showScanQrPopup")
 external void _showScanQrPopup(
-    ScanQrPopupParamsExternal? params, JSFunction? callback);
+  ScanQrPopupParamsExternal? params,
+  JSFunction? callback,
+);
 
 @JS("$webAppPath.closeScanQrPopup")
 external void _closeScanQrPopup();
@@ -190,7 +203,8 @@ class WebApp {
   bool get isSupported {
     if (_window == null) {
       throw Exception(
-          "Telegram script is not added to index.html\nSee: https://core.telegram.org/bots/webapps#initializing-mini-apps");
+        "Telegram script is not added to index.html\nSee: https://core.telegram.org/bots/webapps#initializing-mini-apps",
+      );
     }
     if (_initData != "") {
       return true;
@@ -350,15 +364,15 @@ class WebApp {
   /// UI elements like notches or navigation bars.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  SafeAreaInsert get safeAreaInsert =>
-      SafeAreaInsert._fromExternal(_safeAreaInsert);
+  SafeAreaInset get safeAreaInset =>
+      SafeAreaInset._fromExternal(_safeAreaInset);
 
   /// An object representing the safe area for displaying content within the app,
   /// free from overlapping Telegram UI elements.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  ContentSafeAreaInsert get contentSafeAreaInsert =>
-      ContentSafeAreaInsert._fromExternal(_contentSafeAreaInsert);
+  ContentSafeAreaInset get contentSafeAreaInset =>
+      ContentSafeAreaInset._fromExternal(_contentSafeAreaInset);
 
   /// An object for controlling the back button which can be displayed in the
   /// header of the Mini App in the Telegram interface.
@@ -543,13 +557,15 @@ class WebApp {
   /// - missed – the icon has not been added to the home screen.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void checkHomeScreenStatus(
-      {void Function(HomeScreenCheckedStatus status)? callback}) {
+  void checkHomeScreenStatus({
+    void Function(HomeScreenCheckedStatus status)? callback,
+  }) {
     callback == null
         ? _checkHomeScreenStatus()
         : _checkHomeScreenStatus(
-            ((JSString ext) =>
-                callback(HomeScreenCheckedStatus.fromName(ext.toDart))).toJS,
+            ((JSString ext) => callback(
+              HomeScreenCheckedStatus.fromName(ext.toDart),
+            )).toJS,
           );
   }
 
@@ -595,14 +611,16 @@ class WebApp {
   /// of the following types: *users, bots, groups, channels.*
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void switchInlineQuery(
-          {required String query, List<WebAppChatType>? chooseChatTypes}) =>
-      _switchInlineQuery(
-          query.toJS,
-          (chooseChatTypes?..remove(WebAppChatType.sender))
-              ?.map((e) => e.name.toJS)
-              .toList()
-              .toJS);
+  void switchInlineQuery({
+    required String query,
+    List<WebAppChatType>? chooseChatTypes,
+  }) => _switchInlineQuery(
+    query.toJS,
+    (chooseChatTypes?..remove(WebAppChatType.sender))
+        ?.map((e) => e.name.toJS)
+        .toList()
+        .toJS,
+  );
 
   /// A method that opens a link in an external browser. The Mini App will not be closed.
   /// `Bot API 6.4+` If the optional options parameter is passed with the field
@@ -615,8 +633,9 @@ class WebApp {
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   void openLink({required String url, bool? tryInstantView}) => _openLink(
-      url.toJS,
-      _OpenLinkOptions(try_instant_view: tryInstantView ?? false)._toExt);
+    url.toJS,
+    _OpenLinkOptions(try_instant_view: tryInstantView ?? false)._toExt,
+  );
 
   /// A method that opens a telegram link inside the Telegram app. The Mini App
   /// will *not* be closed after this method is called.
@@ -633,16 +652,17 @@ class WebApp {
   /// be passed as the first argument.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void openInvoice(
-          {required String url,
-          void Function(InvoiceResult result)? callback}) =>
-      _openInvoice(
-        url.toJS,
-        callback != null
-            ? ((JSString result) =>
-                callback(InvoiceResult.fromName(result.toDart))).toJS
-            : null,
-      );
+  void openInvoice({
+    required String url,
+    void Function(InvoiceResult result)? callback,
+  }) => _openInvoice(
+    url.toJS,
+    callback != null
+        ? ((JSString result) => callback(
+            InvoiceResult.fromName(result.toDart),
+          )).toJS
+        : null,
+  );
 
   /// `Bot API 6.1+` A method that opens an invoice using the link *url*. The Mini
   /// App will receive the [event](https://core.telegram.org/bots/webapps#events-available-for-mini-apps)
@@ -663,9 +683,10 @@ class WebApp {
   /// describes additional sharing settings.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void shareToStory(
-          {required String mediaUrl, StoryShareParams? storyShareParams}) =>
-      _shareToStory(mediaUrl.toJS, storyShareParams?._toExt);
+  void shareToStory({
+    required String mediaUrl,
+    StoryShareParams? storyShareParams,
+  }) => _shareToStory(mediaUrl.toJS, storyShareParams?._toExt);
 
   /// `Bot API 8.0+` A method that opens a dialog allowing the user to share a
   /// message provided by the bot. If an optional *callback* parameter is provided,
@@ -676,9 +697,10 @@ class WebApp {
   /// [savePreparedInlineMessage](https://core.telegram.org/bots/api#savepreparedinlinemessage).
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void shareMessage(
-          {required String msgId, void Function(bool result)? callback}) =>
-      _shareMessage(msgId.toJS, callback?.toJS);
+  void shareMessage({
+    required String msgId,
+    void Function(bool result)? callback,
+  }) => _shareMessage(msgId.toJS, callback?.toJS);
 
   /// `Bot API 8.0+` A method that opens a dialog allowing the user to share a
   /// message provided by the bot. Function will be return a boolean,
@@ -710,15 +732,11 @@ class WebApp {
   /// requestEmojiStatusAccess.*
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void setEmojiStatus(
-          {required String customEmojiId,
-          EmojiStatusParams? params,
-          void Function(bool result)? callback}) =>
-      _setEmojiStatus(
-        customEmojiId.toJS,
-        params?._toExt,
-        callback?.toJS,
-      );
+  void setEmojiStatus({
+    required String customEmojiId,
+    EmojiStatusParams? params,
+    void Function(bool result)? callback,
+  }) => _setEmojiStatus(customEmojiId.toJS, params?._toExt, callback?.toJS);
 
   /// Bot API 8.0+ A method that opens a dialog allowing the user to set the
   /// specified custom emoji as their status. An optional *params* argument of type
@@ -733,8 +751,10 @@ class WebApp {
   /// requestEmojiStatusAccess.*
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> setEmojiStatusAsync(
-      {required String customEmojiId, EmojiStatusParams? params}) async {
+  Future<bool> setEmojiStatusAsync({
+    required String customEmojiId,
+    EmojiStatusParams? params,
+  }) async {
     Completer<bool> completer = Completer();
     void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
 
@@ -773,10 +793,10 @@ class WebApp {
   /// whether the user accepted the download request.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void downloadFile(
-          {required DownloadFileParams params,
-          void Function(bool result)? callback}) =>
-      _downloadFile(params._toExt, callback?.toJS);
+  void downloadFile({
+    required DownloadFileParams params,
+    void Function(bool result)? callback,
+  }) => _downloadFile(params._toExt, callback?.toJS);
 
   /// `Bot API 8.0+` A method that displays a native popup prompting the user to
   /// download a file specified by the *params* argument of type
@@ -784,9 +804,7 @@ class WebApp {
   /// Function return boolean indicating whether the user accepted the download request.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> downloadFileAsync({
-    required DownloadFileParams params,
-  }) async {
+  Future<bool> downloadFileAsync({required DownloadFileParams params}) async {
     Completer<bool> completer = Completer();
     void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
@@ -808,13 +826,10 @@ class WebApp {
   /// the pressed button will be passed as the first argument.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showPopup(
-          {required PopupParams params,
-          void Function(String? buttonId)? callback}) =>
-      _showPopup(
-        params._toExt,
-        callback?.toJS,
-      );
+  void showPopup({
+    required PopupParams params,
+    void Function(String? buttonId)? callback,
+  }) => _showPopup(params._toExt, callback?.toJS);
 
   /// `Bot API 6.2+` A method that shows a native popup described by the *params*
   /// argument of the type [PopupParams](https://core.telegram.org/bots/webapps#popupparams).
@@ -858,9 +873,10 @@ class WebApp {
   /// 'OK' button.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showConfirm(
-          {required String message, void Function(bool result)? callback}) =>
-      _showConfirm(message.toJS, callback?.toJS);
+  void showConfirm({
+    required String message,
+    void Function(bool result)? callback,
+  }) => _showConfirm(message.toJS, callback?.toJS);
 
   /// `Bot API 6.2+` A method that shows *message* in a simple confirmation window
   /// with 'OK' and 'Cancel' buttons. Function will returb a boolean indicating
@@ -887,16 +903,17 @@ class WebApp {
   /// the user closes the native popup for scanning a QR code.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showScanQrPopup(
-          {ScanQrPopupParams? params,
-          void Function(String result)? callback,
-          bool closeOnFirstResult = true}) =>
-      _showScanQrPopup(
-          params?._toExt,
-          (JSString result) {
-            if (callback != null) callback(result.toDart);
-            return closeOnFirstResult;
-          }.toJS);
+  void showScanQrPopup({
+    ScanQrPopupParams? params,
+    void Function(String result)? callback,
+    bool closeOnFirstResult = true,
+  }) => _showScanQrPopup(
+    params?._toExt,
+    (JSString result) {
+      if (callback != null) callback(result.toDart);
+      return closeOnFirstResult;
+    }.toJS,
+  );
 
   /// `Bot API 6.4+` A method that shows a native popup for scanning a QR code
   /// described by the params argument of the type
@@ -907,9 +924,10 @@ class WebApp {
   /// the user closes the native popup for scanning a QR code.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<String> showScanQrPopupAsync(
-      {ScanQrPopupParams? params,
-      bool Function(String result)? condition}) async {
+  Future<String> showScanQrPopupAsync({
+    ScanQrPopupParams? params,
+    bool Function(String result)? condition,
+  }) async {
     Completer<String> completer = Completer();
     bool callback(JSString result) {
       if (condition == null || condition(result.toDart)) {
@@ -933,9 +951,7 @@ class WebApp {
   /// the user closes the native popup for scanning a QR code.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Stream<String> showScanQrPopupStream({
-    ScanQrPopupParams? params,
-  }) {
+  Stream<String> showScanQrPopupStream({ScanQrPopupParams? params}) {
     StreamController<String> streamController = StreamController();
     void callback(JSString result) {
       streamController.add(result.toDart);
