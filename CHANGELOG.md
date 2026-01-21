@@ -2,7 +2,7 @@
 
 ## 0.0.12
 
-* Fixed error with `haptic_feedback.dart` (Issue [#18](https://github.com/KirillRedactor/telegram_miniapp/issues/18))
+* Fixed error with `haptic_feedback` with `impactOccurred` and `notificationOccurred` (Issue [#18](https://github.com/KirillRedactor/telegram_miniapp/issues/18))
 
 ## 0.0.11
 
