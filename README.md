@@ -7,7 +7,7 @@ This package provides a convenient way to develop Telegram Mini Apps using Flutt
 
 **Supports Telegram Bot API 9.1**
 
->Ready for compilation in WASM
+> Ready for compilation in WASM
 
 ## Features
 
