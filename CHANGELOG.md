@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.12
+
+* Fixed error with `haptic_feedback.dart` (Issue [#18](https://github.com/KirillRedactor/telegram_miniapp/issues/18))
+
 ## 0.0.11
 
 * Fixed error with SafeAreaInset and ContentSafeAreaInset

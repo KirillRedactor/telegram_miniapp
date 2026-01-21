@@ -4,11 +4,11 @@ import '../../flutter_telegram_miniapp.dart';
 
 const _hapticFeedbackPath = "$webAppPath.HapticFeedback";
 
-@JS("$_hapticFeedbackPath.impactOccured")
-external void _impactOccured(JSString style);
+@JS("$_hapticFeedbackPath.impactOccurred")
+external void _impactOccurred(JSString style);
 
-@JS("$_hapticFeedbackPath.notificationOccured")
-external void _notificationOccured(JSString type);
+@JS("$_hapticFeedbackPath.notificationOccurred")
+external void _notificationOccurred(JSString type);
 
 @JS("$_hapticFeedbackPath.selectionChanged")
 external void _selectionChanged();
@@ -25,15 +25,15 @@ class HapticFeedback {
   /// - *heavy*, indicates a collision between large or heavyweight UI objects,
   /// - *rigid*, indicates a collision between hard or inflexible UI objects,
   /// - *soft*, indicates a collision between soft or flexible UI objects.
-  void impactOccured({required HapticFeedbackImpactStyle style}) =>
-      _impactOccured(style.name.toJS);
+  void impactOccurred({required HapticFeedbackImpactStyle style}) =>
+      _impactOccurred(style.name.toJS);
 
   /// Bot API 6.1+ A method tells that a task or action has succeeded, failed, or produced a warning. The Telegram app may play the appropriate haptics based on type value passed. Type can be one of these values:
   /// - *error*, indicates that a task or action has failed,
   /// - *success*, indicates that a task or action has completed successfully,
   /// - *warning*, indicates that a task or action produced a warning.
-  void notificationOccured({required HapticFeedbackNotificationType type}) =>
-      _notificationOccured(type.name.toJS);
+  void notificationOccurred({required HapticFeedbackNotificationType type}) =>
+      _notificationOccurred(type.name.toJS);
 
   /// `Bot API 6.1+` A method tells that the user has changed a selection. The
   /// Telegram app may play the appropriate haptics.
