@@ -14,11 +14,7 @@ class PopupParams {
   /// Set to *[{“type”:“close”}]* by default.
   List<PopupButton>? buttons;
 
-  PopupParams({
-    this.title,
-    required this.message,
-    this.buttons,
-  });
+  PopupParams({this.title, required this.message, this.buttons});
 
   // factory PopupParams._fromExternal(PopupParamsExternal ext) =>
   //     PopupParams(
@@ -26,11 +22,15 @@ class PopupParams {
   //       name: ext.name,
   //     );
 
-  PopupParamsExternal get _toExt => createJSInteropWrapper(_PopupParamsExport(
-        title: title,
-        message: message,
-        buttons: buttons?.map((e) => e._toExt).toList(),
-      )) as PopupParamsExternal;
+  PopupParamsExternal get _toExt =>
+      createJSInteropWrapper(
+            _PopupParamsExport(
+              title: title,
+              message: message,
+              buttons: buttons?.map((e) => e._toExt).toList(),
+            ),
+          )
+          as PopupParamsExternal;
 }
 
 @JSExport()
@@ -39,11 +39,7 @@ class _PopupParamsExport {
   String message;
   List<PopupButtonExternal>? buttons;
 
-  _PopupParamsExport({
-    this.title,
-    required this.message,
-    this.buttons,
-  });
+  _PopupParamsExport({this.title, required this.message, this.buttons});
 }
 
 extension type PopupParamsExternal(JSObject _) implements JSObject {

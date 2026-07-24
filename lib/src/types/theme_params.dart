@@ -66,22 +66,22 @@ class ThemeParams {
       : null;
 
   factory ThemeParams._fromExternal(ThemeParamsExternal ext) => ThemeParams._(
-        bgColorRaw: ext.bgColor,
-        textColorRaw: ext.textColor,
-        hintColorRaw: ext.hintColor,
-        linkColorRaw: ext.linkColor,
-        buttonColorRaw: ext.buttonColor,
-        buttonTextColorRaw: ext.buttonTextColor,
-        secondaryBgColorRaw: ext.secondaryBgColor,
-        headerBgColorRaw: ext.headerBgColor,
-        bottomBarBgColorRaw: ext.bottomBarBgColor,
-        accentTextColorRaw: ext.accentTextColor,
-        sectionBgColorRaw: ext.sectionBgColor,
-        sectionHeaderTextColorRaw: ext.sectionHeaderTextColor,
-        sectionSeparatorColorRaw: ext.sectionSeparatorColor,
-        subtitleTextColorRaw: ext.subtitleTextColor,
-        destructiveTextColorRaw: ext.destructiveTextColor,
-      );
+    bgColorRaw: ext.bgColor,
+    textColorRaw: ext.textColor,
+    hintColorRaw: ext.hintColor,
+    linkColorRaw: ext.linkColor,
+    buttonColorRaw: ext.buttonColor,
+    buttonTextColorRaw: ext.buttonTextColor,
+    secondaryBgColorRaw: ext.secondaryBgColor,
+    headerBgColorRaw: ext.headerBgColor,
+    bottomBarBgColorRaw: ext.bottomBarBgColor,
+    accentTextColorRaw: ext.accentTextColor,
+    sectionBgColorRaw: ext.sectionBgColor,
+    sectionHeaderTextColorRaw: ext.sectionHeaderTextColor,
+    sectionSeparatorColorRaw: ext.sectionSeparatorColor,
+    subtitleTextColorRaw: ext.subtitleTextColor,
+    destructiveTextColorRaw: ext.destructiveTextColor,
+  );
 
   ThemeParams._({
     this.bgColorRaw,

@@ -8,12 +8,12 @@ class WebAppChat {
   final String? photoUrl;
 
   factory WebAppChat._fromExternal(WebAppChatExternal ext) => WebAppChat(
-        id: ext.id.toDartInt,
-        type: WebAppChatType.fromName(ext.type),
-        title: ext.title,
-        username: ext.username,
-        photoUrl: ext.photoUrl,
-      );
+    id: ext.id.toDartInt,
+    type: WebAppChatType.fromName(ext.type),
+    title: ext.title,
+    username: ext.username,
+    photoUrl: ext.photoUrl,
+  );
 
   WebAppChat({
     required this.id,

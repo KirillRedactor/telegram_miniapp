@@ -89,9 +89,8 @@ final popupParams = PopupParams(
       PopupButton(text: "OK", type: PopupButtonType.ok)
     ]
 );
-webApp.showPopup(params: popupParams, callback: (buttonId) {
-    print("Button clicked $buttonId");
-});
+final buttonId = await webApp.showPopup(params: popupParams);
+print("Button clicked $buttonId");
 
 final initData = webApp.initDataUnsafe;
 
@@ -118,10 +117,10 @@ You can use asynchronous functions to get values from telegram api
 ```dart
 final webApp = WebApp();
 
-final result = await webApp.openInvoiceAsync(url: "Some url");
+final result = await webApp.openInvoice(url: "Some url");
 print(result);
 
-final hasContact = await webApp.requestContactAsync();
+final hasContact = await webApp.requestContact();
 if(hasContact){
   print("User sent contact");
 }

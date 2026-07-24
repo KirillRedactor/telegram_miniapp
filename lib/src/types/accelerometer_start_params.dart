@@ -6,7 +6,7 @@ class AccelerometerStartParams {
   int refresh_rate;
 
   AccelerometerStartParams({required int refreshRate})
-      : refresh_rate = refreshRate;
+    : refresh_rate = refreshRate;
 
   AccelerometerStartParamsExternal get _toExt =>
       createJSInteropWrapper<AccelerometerStartParams>(this)

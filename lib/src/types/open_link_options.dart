@@ -6,9 +6,7 @@ part of '../../flutter_telegram_miniapp.dart';
 class _OpenLinkOptions {
   bool try_instant_view;
 
-  _OpenLinkOptions({
-    this.try_instant_view = false,
-  });
+  _OpenLinkOptions({this.try_instant_view = false});
 
   OpenLinkOptionsExternal get _toExt =>
       createJSInteropWrapper<_OpenLinkOptions>(this) as OpenLinkOptionsExternal;

@@ -26,17 +26,17 @@ class WebAppUser {
   });
 
   factory WebAppUser._fromExternal(WebAppUserExternal ext) => WebAppUser._(
-        id: ext.id.toDartInt,
-        isBot: ext.isBot ?? false,
-        firstName: ext.firstName,
-        lastName: ext.lastName,
-        username: ext.username,
-        languageCode: ext.languageCode,
-        isPremium: ext.isPremium ?? false,
-        addedToAttachmentMenu: ext.addedToAttachmentMenu ?? false,
-        allowsWriteToPm: ext.allowsWriteToPm ?? false,
-        photoUrl: ext.photoUrl,
-      );
+    id: ext.id.toDartInt,
+    isBot: ext.isBot ?? false,
+    firstName: ext.firstName,
+    lastName: ext.lastName,
+    username: ext.username,
+    languageCode: ext.languageCode,
+    isPremium: ext.isPremium ?? false,
+    addedToAttachmentMenu: ext.addedToAttachmentMenu ?? false,
+    allowsWriteToPm: ext.allowsWriteToPm ?? false,
+    photoUrl: ext.photoUrl,
+  );
 
   @override
   String toString() {

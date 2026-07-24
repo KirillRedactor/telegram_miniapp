@@ -21,21 +21,23 @@ class PopupButton {
   /// Required if *type* is *default* or *destructive*. Irrelevant for other types.
   String? text;
 
-  PopupButton({
-    this.id,
-    this.type,
-    this.text,
-  }) : assert(
-            (type == PopupButtonType.defaultType ||
-                    type == PopupButtonType.destructive) &&
-                text != null,
-            "Field text required if type is default or destructive.");
+  PopupButton({this.id, this.type, this.text})
+    : assert(
+        (type == PopupButtonType.defaultType ||
+                type == PopupButtonType.destructive) &&
+            text != null,
+        "Field text required if type is default or destructive.",
+      );
 
-  PopupButtonExternal get _toExt => createJSInteropWrapper(_PopupButtonExport(
-        id: id,
-        type: type?.name.replaceAll("Type", ""),
-        text: text,
-      )) as PopupButtonExternal;
+  PopupButtonExternal get _toExt =>
+      createJSInteropWrapper(
+            _PopupButtonExport(
+              id: id,
+              type: type?.name.replaceAll("Type", ""),
+              text: text,
+            ),
+          )
+          as PopupButtonExternal;
 }
 
 @JSExport()
@@ -44,11 +46,7 @@ class _PopupButtonExport {
   String? type;
   String? text;
 
-  _PopupButtonExport({
-    required this.id,
-    this.type,
-    this.text,
-  });
+  _PopupButtonExport({required this.id, this.type, this.text});
 }
 
 extension type PopupButtonExternal(JSObject _) implements JSObject {

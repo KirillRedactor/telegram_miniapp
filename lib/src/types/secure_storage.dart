@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import '../../flutter_telegram_miniapp.dart';
+import '../internal/js_async.dart';
 
 const _secureStoragePath = "$webAppPath.SecureStorage";
 
@@ -20,110 +21,46 @@ external void _removeItem(JSString key, JSFunction? callback);
 @JS("$_secureStoragePath.clear")
 external void _clear(JSFunction? callback);
 
+/// This object provides access to a secure, hardware-backed storage on the
+/// user's device.
+///
+/// [API Reference](https://core.telegram.org/bots/webapps#securestorage)
 class SecureStorage {
-  void setItem(
-      {required String key,
-      required String value,
-      void Function(bool result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      if (callback != null) callback(result?.toDart ?? false);
-    }
+  /// Stores the [value] under the given [key]. Returns whether the value was
+  /// stored. Throws a [TelegramMiniAppException] if the operation fails.
+  Future<bool> setItem({required String key, required String value}) =>
+      completeNodeCallback(
+        (result) => (result as JSBoolean?)?.toDart ?? false,
+        (callback) => _setItem(key.toJS, value.toJS, callback),
+      );
 
-    return _setItem(key.toJS, value.toJS, callbackFunction.toJS);
-  }
+  /// Returns the value stored under [key], or `null` if it is absent. Throws a
+  /// [TelegramMiniAppException] if the operation fails.
+  Future<String?> getItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSString?)?.toDart,
+    (callback) => _getItem(key.toJS, callback),
+  );
 
-  Future<bool> setItemAsync(
-      {required String key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      completer.complete(result?.toDart ?? false);
-    }
+  /// Attempts to restore a value previously removed from this device. Returns
+  /// the restored value, or `null` if it cannot be restored. Throws a
+  /// [TelegramMiniAppException] if the operation fails.
+  Future<String?> restoreItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSString?)?.toDart,
+    (callback) => _restoreItem(key.toJS, callback),
+  );
 
-    _setItem(key.toJS, value.toJS, callback.toJS);
-    return await completer.future;
-  }
+  /// Removes the value stored under [key]. Returns whether the value was
+  /// removed. Throws a [TelegramMiniAppException] if the operation fails.
+  Future<bool> removeItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSBoolean?)?.toDart ?? false,
+    (callback) => _removeItem(key.toJS, callback),
+  );
 
-  void getItem(
-      {required String key, required void Function(String? result) callback}) {
-    void callbackFunction(JSString? error, JSString? result) {
-      callback(result?.toDart);
-    }
-
-    _getItem(
-      key.toJS,
-      callbackFunction.toJS,
-    );
-  }
-
-  Future<String?> getItemAsync({required String key}) async {
-    Completer<String?> completer = Completer();
-    void callback(JSString? error, JSString? result) {
-      completer.complete(result?.toDart);
-    }
-
-    _getItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void restoreItem(
-      {required String key, required void Function(String? result) callback}) {
-    void callbackFunction(JSString? error, JSString? result) {
-      callback(result?.toDart);
-    }
-
-    _restoreItem(
-      key.toJS,
-      callbackFunction.toJS,
-    );
-  }
-
-  Future<String?> restoreItemAsync({required String key}) async {
-    Completer<String?> completer = Completer();
-    void callback(JSString? error, JSString? result) {
-      completer.complete(result?.toDart);
-    }
-
-    _restoreItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void removeItem(
-      {required String key, void Function(bool? result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      if (callback != null) callback(result?.toDart);
-    }
-
-    _removeItem(key.toJS, callbackFunction.toJS);
-  }
-
-  Future<bool> removeItemAsync(
-      {required String key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      completer.complete(result?.toDart ?? false);
-    }
-
-    _removeItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void clear({required void Function(bool? result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      if (callback != null) {
-        callback(result?.toDart);
-      }
-    }
-
-    _clear(callbackFunction.toJS);
-  }
-
-  Future<bool> clearAsync() async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      completer.complete(result?.toDart ?? false);
-    }
-
-    _clear(callback.toJS);
-    return await completer.future;
-  }
+  /// Removes all values stored for the current user. Returns whether the
+  /// storage was cleared. Throws a [TelegramMiniAppException] if the operation
+  /// fails.
+  Future<bool> clear() => completeNodeCallback(
+    (result) => (result as JSBoolean?)?.toDart ?? false,
+    (callback) => _clear(callback),
+  );
 }

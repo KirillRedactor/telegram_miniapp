@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import '../../flutter_telegram_miniapp.dart';
+import '../internal/js_async.dart';
 
 const _cloudStoragePath = "$webAppPath.CloudStorage";
 
@@ -25,142 +26,49 @@ external void _getKeys(JSFunction callback);
 ///
 /// [API Reference](https://core.telegram.org/bots/webapps#cloudstorage)
 class CloudStorage {
-  void setItem(
-      {required String key,
-      required String value,
-      void Function(bool result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      if (callback != null) callback(result?.toDart ?? false);
-    }
+  /// Stores the [value] under the given [key]. Returns whether the value was
+  /// stored. Throws a [TelegramMiniAppException] if the operation fails.
+  Future<bool> setItem({required String key, required String value}) =>
+      completeNodeCallback(
+        (result) => (result as JSBoolean?)?.toDart ?? false,
+        (callback) => _setItem(key.toJS, value.toJS, callback),
+      );
 
-    return _setItem(key.toJS, value.toJS, callbackFunction.toJS);
+  /// Returns the value stored under [key], or `null` if it is absent. Throws a
+  /// [TelegramMiniAppException] if the operation fails.
+  Future<String?> getItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSString?)?.toDart,
+    (callback) => _getItem(key.toJS, callback),
+  );
+
+  /// Returns the values stored under [keys], resolving all lookups in parallel.
+  Future<Map<String, String?>> getItems({required List<String> keys}) async {
+    final values = await Future.wait(keys.map((key) => getItem(key: key)));
+    return {for (var i = 0; i < keys.length; i++) keys[i]: values[i]};
   }
 
-  Future<bool> setItemAsync(
-      {required String key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      completer.complete(result?.toDart ?? false);
-    }
+  /// Removes the value stored under [key]. Returns whether the value was
+  /// removed. Throws a [TelegramMiniAppException] if the operation fails.
+  Future<bool> removeItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSBoolean?)?.toDart ?? false,
+    (callback) => _removeItem(key.toJS, callback),
+  );
 
-    _setItem(key.toJS, value.toJS, callback.toJS);
-    return await completer.future;
-  }
+  /// Removes the values stored under [keys]. Returns whether the values were
+  /// removed. Throws a [TelegramMiniAppException] if the operation fails.
+  Future<bool> removeItems({required List<String> keys}) =>
+      completeNodeCallback(
+        (result) => (result as JSBoolean?)?.toDart ?? false,
+        (callback) =>
+            _removeItems(keys.map((e) => e.toJS).toList().toJS, callback),
+      );
 
-  void getItem(
-      {required String key, required void Function(String? result) callback}) {
-    void callbackFunction(JSString? error, JSString? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      callback(result?.toDart);
-    }
-
-    _getItem(
-      key.toJS,
-      callbackFunction.toJS,
-    );
-  }
-
-  Future<String?> getItemAsync({required String key}) async {
-    Completer<String?> completer = Completer();
-    void callback(JSString? error, JSString? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      completer.complete(result?.toDart);
-    }
-
-    _getItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void getItems(
-      {required List<String> keys,
-      required void Function(Map<String, String?> result) callback}) {
-    Map<String, String?> result = {};
-    for (var key in keys) {
-      callbackFunction(String? value) => result[key] = value;
-      getItem(key: key, callback: callbackFunction);
-    }
-    callback(result);
-  }
-
-  Future<Map<String, String?>> getItemsAsync(
-      {required List<String> keys}) async {
-    Map<String, Future<String?>> futures = {};
-    Map<String, String?> result = {};
-    for (var key in keys) {
-      futures[key] = getItemAsync(key: key);
-    }
-    for (var key in futures.keys) {
-      result[key] = await futures[key];
-    }
-    return result;
-  }
-
-  void removeItem(
-      {required String key, void Function(bool? result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      if (callback != null) callback(result?.toDart);
-    }
-
-    _removeItem(key.toJS, callbackFunction.toJS);
-  }
-
-  Future<bool> removeItemAsync(
-      {required String key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      completer.complete(result?.toDart ?? false);
-    }
-
-    _removeItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void removeItems(
-      {required List<String> key, void Function(bool? result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      if (callback != null) callback(result?.toDart);
-    }
-
-    _removeItems(key.map((e) => e.toJS).toList().toJS, callbackFunction.toJS);
-  }
-
-  Future<bool> removeItemsAsync(
-      {required List<String> key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      completer.complete(result?.toDart ?? false);
-    }
-
-    _removeItems(key.map((e) => e.toJS).toList().toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void getKeys({required void Function(List<String>? result)? callback}) {
-    void callbackFunction(JSString? error, JSArray<JSString>? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      if (callback != null) {
-        callback(result?.toDart.map((e) => e.toDart).toList());
-      }
-    }
-
-    _getKeys(callbackFunction.toJS);
-  }
-
-  Future<List<String>> getKeysAsync() async {
-    Completer<List<String>> completer = Completer();
-    void callback(JSString? error, JSArray<JSString>? result) {
-      // if (error != null) debugPrint("Error: ${error.toDart}");
-      completer
-          .complete(result?.toDart.map((e) => e.toDart).toList() ?? <String>[]);
-    }
-
-    _getKeys(callback.toJS);
-    return await completer.future;
-  }
+  /// Returns all keys stored for the current user. Throws a
+  /// [TelegramMiniAppException] if the operation fails.
+  Future<List<String>> getKeys() => completeNodeCallback(
+    (result) =>
+        (result as JSArray<JSString>?)?.toDart.map((e) => e.toDart).toList() ??
+        <String>[],
+    (callback) => _getKeys(callback),
+  );
 }

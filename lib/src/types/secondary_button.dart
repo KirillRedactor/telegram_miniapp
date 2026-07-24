@@ -149,14 +149,13 @@ class SecondaryButton implements BottomButton {
     BottomButtonPosition? position,
     bool? isActive,
     bool? isVisible,
-  }) =>
-      _setParams(
-        text?.toJS,
-        color != null ? toHex(color).toJS : colorRaw?.toJS,
-        textColor != null ? toHex(textColor).toJS : textColorRaw?.toJS,
-        hasShineEffect?.toJS,
-        position?.name.toJS,
-        isActive?.toJS,
-        isVisible?.toJS,
-      );
+  }) => _setParams(
+    text?.toJS,
+    color != null ? toHex(color).toJS : colorRaw?.toJS,
+    textColor != null ? toHex(textColor).toJS : textColorRaw?.toJS,
+    hasShineEffect?.toJS,
+    position?.name.toJS,
+    isActive?.toJS,
+    isVisible?.toJS,
+  );
 }

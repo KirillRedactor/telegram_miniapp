@@ -11,10 +11,7 @@ class StoryWidgetLink {
   /// *Optional.* The name to be displayed for the widget link, 0-48 characters.
   String? name;
 
-  StoryWidgetLink({
-    required this.url,
-    this.name,
-  });
+  StoryWidgetLink({required this.url, this.name});
 
   // factory StoryWidgetLink._fromExternal(StoryWidgetLinkExternal ext) =>
   //     StoryWidgetLink(

@@ -3,10 +3,6 @@ part of '../flutter_telegram_miniapp.dart';
 @JS("window.Telegram")
 external JSAny? get _window;
 
-@JS("console.log")
-// ignore: unused_element
-external void _consoleLog(JSAny object);
-
 @JS("$webAppPath.initData")
 external String get _initData;
 
@@ -408,6 +404,16 @@ class WebApp {
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   CloudStorage get cloudStorage => CloudStorage();
 
+  /// An object for controlling secure, hardware-backed storage on the device.
+  ///
+  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+  SecureStorage get secureStorage => SecureStorage();
+
+  /// An object for controlling persistent local storage on the device.
+  ///
+  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+  DeviceStorage get deviceStorage => DeviceStorage();
+
   /// An object for controlling biometrics on the device.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
@@ -557,37 +563,13 @@ class WebApp {
   /// - missed – the icon has not been added to the home screen.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void checkHomeScreenStatus({
-    void Function(HomeScreenCheckedStatus status)? callback,
-  }) {
-    callback == null
-        ? _checkHomeScreenStatus()
-        : _checkHomeScreenStatus(
-            ((JSString ext) => callback(
-              HomeScreenCheckedStatus.fromName(ext.toDart),
-            )).toJS,
-          );
-  }
+  Future<HomeScreenCheckedStatus> checkHomeScreenStatus() {
+    final completer = Completer<HomeScreenCheckedStatus>();
+    void callback(JSString ext) =>
+        completer.complete(HomeScreenCheckedStatus.fromName(ext.toDart));
 
-  /// `Bot API 8.0+` A method that checks if adding to the home screen is supported
-  /// and if the Mini App has already been added. If an optional callback parameter
-  /// is provided, the callback function will be called with a single argument
-  /// status, which is a string indicating the home screen status. Possible values
-  /// for status are:
-  /// - unsupported – the feature is not supported, and it is not possible to add
-  /// the icon to the home screen,
-  /// - unknown – the feature is supported, and the icon can be added, but it is
-  /// not possible to determine if the icon has already been added,
-  /// - added – the icon has already been added to the home screen,
-  /// - missed – the icon has not been added to the home screen.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<HomeScreenCheckedStatus> checkHomeScreenStatusAsync() async {
-    Completer<String> completer = Completer();
-    void callbackFunction(JSString ext) => completer.complete(ext.toDart);
-
-    _checkHomeScreenStatus(callbackFunction.toJS);
-    return HomeScreenCheckedStatus.fromName(await completer.future);
+    _checkHomeScreenStatus(callback.toJS);
+    return completer.future;
   }
 
   /// A method used to send data to the bot. When this method is called, a service
@@ -652,29 +634,13 @@ class WebApp {
   /// be passed as the first argument.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void openInvoice({
-    required String url,
-    void Function(InvoiceResult result)? callback,
-  }) => _openInvoice(
-    url.toJS,
-    callback != null
-        ? ((JSString result) => callback(
-            InvoiceResult.fromName(result.toDart),
-          )).toJS
-        : null,
-  );
-
-  /// `Bot API 6.1+` A method that opens an invoice using the link *url*. The Mini
-  /// App will receive the [event](https://core.telegram.org/bots/webapps#events-available-for-mini-apps)
-  /// *invoiceClosed* when the invoice is closed. Function will be returned the invoice status.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<InvoiceResult> openInvoiceAsync({required String url}) async {
-    Completer<String> completer = Completer();
-    void callback(JSString result) => completer.complete(result.toDart);
+  Future<InvoiceResult> openInvoice({required String url}) {
+    final completer = Completer<InvoiceResult>();
+    void callback(JSString result) =>
+        completer.complete(InvoiceResult.fromName(result.toDart));
 
     _openInvoice(url.toJS, callback.toJS);
-    return InvoiceResult.fromName(await completer.future);
+    return completer.future;
   }
 
   /// `Bot API 7.8+` A method that opens the native story editor with the media
@@ -697,25 +663,12 @@ class WebApp {
   /// [savePreparedInlineMessage](https://core.telegram.org/bots/api#savepreparedinlinemessage).
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void shareMessage({
-    required String msgId,
-    void Function(bool result)? callback,
-  }) => _shareMessage(msgId.toJS, callback?.toJS);
+  Future<bool> shareMessage({required String msgId}) {
+    final completer = Completer<bool>();
+    void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
-  /// `Bot API 8.0+` A method that opens a dialog allowing the user to share a
-  /// message provided by the bot. Function will be return a boolean,
-  /// indicating whether the message was successfully sent. The message id passed
-  /// to this method must belong to a [PreparedInlineMessage](https://core.telegram.org/bots/api#preparedinlinemessage)
-  /// previously obtained via the Bot API method
-  /// [savePreparedInlineMessage](https://core.telegram.org/bots/api#savepreparedinlinemessage).
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> shareMessageAsync({required String msgId}) async {
-    Completer<bool> completer = Completer();
-    void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
-
-    _shareMessage(msgId.toJS, callbackFunction.toJS);
-    return await completer.future;
+    _shareMessage(msgId.toJS, callback.toJS);
+    return completer.future;
   }
 
   /// Bot API 8.0+ A method that opens a dialog allowing the user to set the
@@ -732,34 +685,15 @@ class WebApp {
   /// requestEmojiStatusAccess.*
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void setEmojiStatus({
+  Future<bool> setEmojiStatus({
     required String customEmojiId,
     EmojiStatusParams? params,
-    void Function(bool result)? callback,
-  }) => _setEmojiStatus(customEmojiId.toJS, params?._toExt, callback?.toJS);
+  }) {
+    final completer = Completer<bool>();
+    void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
-  /// Bot API 8.0+ A method that opens a dialog allowing the user to set the
-  /// specified custom emoji as their status. An optional *params* argument of type
-  /// [EmojiStatusParams](https://core.telegram.org/bots/webapps#emojistatusparams)
-  /// specifies additional settings, such as duration. Function will return a boolean
-  /// as the first argument, indicating whether the status was set.
-  ///
-  /// *Note: this method opens a native dialog and cannot be used to set the emoji
-  /// status without manual user interaction. For fully programmatic changes, you
-  /// should instead use the Bot API method [setUserEmojiStatus](https://core.telegram.org/bots/bots/api#setuseremojistatus)
-  /// after obtaining authorization to do so via the Mini App method
-  /// requestEmojiStatusAccess.*
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> setEmojiStatusAsync({
-    required String customEmojiId,
-    EmojiStatusParams? params,
-  }) async {
-    Completer<bool> completer = Completer();
-    void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
-
-    _setEmojiStatus(customEmojiId.toJS, params?._toExt, callbackFunction.toJS);
-    return await completer.future;
+    _setEmojiStatus(customEmojiId.toJS, params?._toExt, callback.toJS);
+    return completer.future;
   }
 
   /// `Bot API 8.0+` A method that shows a native popup requesting permission for
@@ -769,20 +703,12 @@ class WebApp {
   /// granted this access.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void requestEmojiStatusAccess({void Function(bool result)? callback}) =>
-      _requestEmojiStatusAccess(callback?.toJS);
+  Future<bool> requestEmojiStatusAccess() {
+    final completer = Completer<bool>();
+    void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
-  /// `Bot API 8.0+` A method that shows a native popup requesting permission for
-  /// the bot to manage user's emoji status. Function return boolean indicating
-  /// whether the user granted this access.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> requestEmojiStatusAccessAsync() async {
-    Completer<bool> completer = Completer();
-    void callbackFunction(JSBoolean ext) => completer.complete(ext.toDart);
-
-    _requestEmojiStatusAccess(callbackFunction.toJS);
-    return await completer.future;
+    _requestEmojiStatusAccess(callback.toJS);
+    return completer.future;
   }
 
   /// `Bot API 8.0+` A method that displays a native popup prompting the user to
@@ -793,23 +719,12 @@ class WebApp {
   /// whether the user accepted the download request.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void downloadFile({
-    required DownloadFileParams params,
-    void Function(bool result)? callback,
-  }) => _downloadFile(params._toExt, callback?.toJS);
-
-  /// `Bot API 8.0+` A method that displays a native popup prompting the user to
-  /// download a file specified by the *params* argument of type
-  /// [DownloadFileParams](https://core.telegram.org/bots/webapps#downloadfileparams).
-  /// Function return boolean indicating whether the user accepted the download request.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> downloadFileAsync({required DownloadFileParams params}) async {
-    Completer<bool> completer = Completer();
+  Future<bool> downloadFile({required DownloadFileParams params}) {
+    final completer = Completer<bool>();
     void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
     _downloadFile(params._toExt, callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 9.1+` A method that hides the on-screen keyboard, if it is currently visible.
@@ -826,24 +741,12 @@ class WebApp {
   /// the pressed button will be passed as the first argument.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showPopup({
-    required PopupParams params,
-    void Function(String? buttonId)? callback,
-  }) => _showPopup(params._toExt, callback?.toJS);
-
-  /// `Bot API 6.2+` A method that shows a native popup described by the *params*
-  /// argument of the type [PopupParams](https://core.telegram.org/bots/webapps#popupparams).
-  /// The Mini App will receive the [event](https://core.telegram.org/bots/webapps#events-available-for-mini-apps)
-  /// *popupClosed* when the popup is closed. The field *id* of
-  /// the pressed button will be returned.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<String?> showPopupAsync({required PopupParams params}) async {
-    Completer<String?> completer = Completer();
+  Future<String?> showPopup({required PopupParams params}) {
+    final completer = Completer<String?>();
     void callback(JSString? buttonId) => completer.complete(buttonId?.toDart);
 
     _showPopup(params._toExt, callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 6.2+` A method that shows *message* in a simple alert with a 'Close'
@@ -851,19 +754,12 @@ class WebApp {
   /// will be called when the popup is closed.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showAlert({required String message, void Function()? callback}) =>
-      _showAlert(message.toJS, callback?.toJS);
-
-  /// `Bot API 6.2+` A method that shows *message* in a simple alert with a 'Close'
-  /// button. Function will return *true* when the popup is closed.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> showAlertAsync({required String message}) async {
-    Completer<bool> completer = Completer();
+  Future<bool> showAlert({required String message}) {
+    final completer = Completer<bool>();
     void callback() => completer.complete(true);
 
     _showAlert(message.toJS, callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 6.2+` A method that shows *message* in a simple confirmation window
@@ -873,73 +769,41 @@ class WebApp {
   /// 'OK' button.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showConfirm({
-    required String message,
-    void Function(bool result)? callback,
-  }) => _showConfirm(message.toJS, callback?.toJS);
-
-  /// `Bot API 6.2+` A method that shows *message* in a simple confirmation window
-  /// with 'OK' and 'Cancel' buttons. Function will returb a boolean indicating
-  /// whether the user pressed the 'OK' button.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> showConfirmAsync({required String message}) async {
-    Completer<bool> completer = Completer();
+  Future<bool> showConfirm({required String message}) {
+    final completer = Completer<bool>();
     void callback(JSBoolean ext) => completer.complete(ext.toDart);
 
     _showConfirm(message.toJS, callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 6.4+` A method that shows a native popup for scanning a QR code
   /// described by the params argument of the type
   /// [ScanQrPopupParams](https://core.telegram.org/bots/webapps#scanqrpopupparams).
-  /// The Mini App will receive the [event](https://core.telegram.org/bots/webapps#events-available-for-mini-apps)
-  /// *qrTextReceived* every time the scanner catches a code with text data. If an
-  /// optional callback parameter was passed, the *callback* function will be called
-  /// and the text from the QR code will be passed as the first argument. Returning
-  /// true inside this *callback* function causes the popup to be closed. Starting
-  /// from `Bot API 7.7`, the Mini App will receive the scanQrPopupClosed event if
-  /// the user closes the native popup for scanning a QR code.
+  /// The scanner stays open until a code satisfying the optional *condition* is
+  /// scanned (by default the first code closes the popup), and the matching text
+  /// is returned. Starting from `Bot API 7.7`, the Mini App will receive the
+  /// scanQrPopupClosed event if the user closes the native popup.
+  ///
+  /// To receive every scanned code instead of just the first match, use
+  /// [showScanQrPopupStream].
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void showScanQrPopup({
-    ScanQrPopupParams? params,
-    void Function(String result)? callback,
-    bool closeOnFirstResult = true,
-  }) => _showScanQrPopup(
-    params?._toExt,
-    (JSString result) {
-      if (callback != null) callback(result.toDart);
-      return closeOnFirstResult;
-    }.toJS,
-  );
-
-  /// `Bot API 6.4+` A method that shows a native popup for scanning a QR code
-  /// described by the params argument of the type
-  /// [ScanQrPopupParams](https://core.telegram.org/bots/webapps#scanqrpopupparams).
-  /// The Mini App will receive the [event](https://core.telegram.org/bots/webapps#events-available-for-mini-apps)
-  /// *qrTextReceived* every time the scanner catches a code with text data. Starting
-  /// from `Bot API 7.7`, the Mini App will receive the scanQrPopupClosed event if
-  /// the user closes the native popup for scanning a QR code.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<String> showScanQrPopupAsync({
+  Future<String> showScanQrPopup({
     ScanQrPopupParams? params,
     bool Function(String result)? condition,
-  }) async {
-    Completer<String> completer = Completer();
+  }) {
+    final completer = Completer<String>();
     bool callback(JSString result) {
       if (condition == null || condition(result.toDart)) {
         completer.complete(result.toDart);
         return true;
-      } else {
-        return false;
       }
+      return false;
     }
 
     _showScanQrPopup(params?._toExt, callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 6.4+` A method that shows a native popup for scanning a QR code
@@ -980,24 +844,12 @@ class WebApp {
   /// App interface (e.g. a click inside the Mini App or on the main button).*
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void readTextFromClipboard({void Function(String result)? callback}) =>
-      _readTextFromClipboard(callback?.toJS);
-
-  /// `Bot API 6.4+` A method that requests text from the clipboard. The Mini App will
-  /// receive the [event](https://core.telegram.org/bots/webapps#events-available-for-mini-apps)
-  /// *clipboardTextReceived*. Function will return text from the clipboard.
-  ///
-  /// *Note: this method can be called only for Mini Apps launched from the
-  /// attachment menu and only in response to a user interaction with the Mini
-  /// App interface (e.g. a click inside the Mini App or on the main button).*
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<String?> readTextFromClipboardAsync() async {
-    Completer<String?> completer = Completer();
+  Future<String?> readTextFromClipboard() {
+    final completer = Completer<String?>();
     void callback(JSString? result) => completer.complete(result?.toDart);
 
     _readTextFromClipboard(callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 6.9+` A method that shows a native popup requesting permission
@@ -1007,20 +859,12 @@ class WebApp {
   /// this access.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void requestWriteAccess({void Function(bool result)? callback}) =>
-      _requestWriteAccess(callback?.toJS);
-
-  /// `Bot API 6.9+` A method that shows a native popup requesting permission
-  /// for the bot to send messages to the user. Function will return a boolean
-  /// indicating whether the user granted this access.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> requestWriteAccessAsync() async {
-    Completer<bool> completer = Completer();
+  Future<bool> requestWriteAccess() {
+    final completer = Completer<bool>();
     void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _requestWriteAccess(callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// `Bot API 6.9+` A method that shows a native popup prompting the user for
@@ -1029,20 +873,12 @@ class WebApp {
   /// be a boolean indicating whether the user shared its phone number.
   ///
   /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  void requestContact({void Function(bool result)? callback}) =>
-      _requestContact(callback?.toJS);
-
-  /// `Bot API 6.9+` A method that shows a native popup prompting the user for
-  /// their phone number. Function will return a boolean indicating whether the
-  /// user shared its phone number.
-  ///
-  /// [API reference](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-  Future<bool> requestContactAsync() async {
-    Completer<bool> completer = Completer();
+  Future<bool> requestContact() {
+    final completer = Completer<bool>();
     void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _requestContact(callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   /// A method that informs the Telegram app that the Mini App is ready to be

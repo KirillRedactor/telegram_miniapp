@@ -145,7 +145,7 @@ class EventHandler {
       (() => _homeScreenAddedStreamController.add(true)).toJS,
     );
     _onEvent(
-      "homeScreenChecked ".toJS,
+      "homeScreenChecked".toJS,
       ((JSString status) => _homeScreenCheckedStreamController.add(
         HomeScreenCheckedStatus.fromName(status.toDart),
       )).toJS,
@@ -158,7 +158,7 @@ class EventHandler {
       )).toJS,
     );
     _onEvent(
-      "accelerometerStopped ".toJS,
+      "accelerometerStopped".toJS,
       (() => _accelerometerStoppedStreamController.add(
         WebApp().accelerometer,
       )).toJS,

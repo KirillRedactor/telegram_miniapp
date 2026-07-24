@@ -21,10 +21,8 @@ class DownloadFileParams {
   // ignore: non_constant_identifier_names
   String file_name;
 
-  DownloadFileParams({
-    required this.url,
-    required String fileName,
-  }) : file_name = fileName;
+  DownloadFileParams({required this.url, required String fileName})
+    : file_name = fileName;
 
   DownloadFileParamsExternal get _toExt =>
       createJSInteropWrapper<DownloadFileParams>(this)

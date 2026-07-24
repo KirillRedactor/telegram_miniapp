@@ -12,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Telegram Mini App Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: MyHomePage(),
     );
   }
@@ -83,84 +81,95 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _showPopup() async {
     final popupParams = PopupParams(
-        message: "Some message",
-        buttons: [PopupButton(text: "OK", type: PopupButtonType.ok)]);
+      message: "Some message",
+      buttons: [PopupButton(text: "OK", type: PopupButtonType.ok)],
+    );
 
-    final buttonId = await WebApp().showPopupAsync(params: popupParams);
+    final buttonId = await WebApp().showPopup(params: popupParams);
     print("Button clicked: $buttonId");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Mini App Example'),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Color Scheme: $_colorScheme',
-                    style: TextStyle(fontSize: 16)),
-                SizedBox(height: 10),
-                Text('Viewport Height: $_viewportHeight',
-                    style: TextStyle(fontSize: 16)),
-                SizedBox(height: 10),
-                Text('Init Data: $_initData', style: TextStyle(fontSize: 16)),
-                SizedBox(height: 10),
-                Text('Header Color: $_headerColor',
-                    style: TextStyle(fontSize: 16)),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    WebApp().setHeaderColor(Colors.red);
-                    setState(() {
-                      _headerColor = WebApp().headerColorRaw ?? "No color set";
-                    });
-                  },
-                  child: Text('Set Header Color to Red'),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    WebApp().mainButton.setText("Main button changed");
-                    setState(() {
-                      _mainButtonText = WebApp().mainButton.text;
-                    });
-                  },
-                  child: Text('Change main button text'),
-                ),
-              ],
-            ),
+      appBar: AppBar(title: Text('Mini App Example')),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Color Scheme: $_colorScheme',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Viewport Height: $_viewportHeight',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 10),
+              Text('Init Data: $_initData', style: TextStyle(fontSize: 16)),
+              SizedBox(height: 10),
+              Text(
+                'Header Color: $_headerColor',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  WebApp().setHeaderColor(Colors.red);
+                  setState(() {
+                    _headerColor = WebApp().headerColorRaw ?? "No color set";
+                  });
+                },
+                child: Text('Set Header Color to Red'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  WebApp().mainButton.setText("Main button changed");
+                  setState(() {
+                    _mainButtonText = WebApp().mainButton.text;
+                  });
+                },
+                child: Text('Change main button text'),
+              ),
+            ],
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-            child: Row(
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             TextButton(
-                onPressed: () async {
-                  final result =
-                      await WebApp().showConfirmAsync(message: "Some message");
-                  print("User clicked: $result");
-                },
-                child: const Text('Confirm popup')),
+              onPressed: () async {
+                final result = await WebApp().showConfirm(
+                  message: "Some message",
+                );
+                print("User clicked: $result");
+              },
+              child: const Text('Confirm popup'),
+            ),
             TextButton(
-                onPressed: () {
-                  WebApp().mainButton.show();
-                  WebApp().mainButton.setText(_mainButtonText);
-                },
-                child: Text("Show main button")),
+              onPressed: () {
+                WebApp().mainButton.show();
+                WebApp().mainButton.setText(_mainButtonText);
+              },
+              child: Text("Show main button"),
+            ),
             TextButton(
-                onPressed: () async {
-                  final result = await WebApp().requestContactAsync();
-                  print("User shared contact: $result");
-                },
-                child: Text("Request Contact")),
+              onPressed: () async {
+                final result = await WebApp().requestContact();
+                print("User shared contact: $result");
+              },
+              child: Text("Request Contact"),
+            ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

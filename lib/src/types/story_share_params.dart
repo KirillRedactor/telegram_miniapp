@@ -12,10 +12,7 @@ class StoryShareParams {
   /// Note that only [premium](https://telegram.org/faq_premium#telegram-premium) subscribers can post stories with links.
   StoryWidgetLink? widgetLink;
 
-  StoryShareParams({
-    this.text,
-    this.widgetLink,
-  });
+  StoryShareParams({this.text, this.widgetLink});
 
   // factory StoryWidgetLink._fromExternal(StoryWidgetLinkExternal ext) =>
   //     StoryWidgetLink(
@@ -24,10 +21,10 @@ class StoryShareParams {
   //     );
 
   StoryShareParamsExternal get _toExt =>
-      createJSInteropWrapper<_StoryShareParamsExport>(_StoryShareParamsExport(
-        text: text,
-        widgetLink: widgetLink?._toExt,
-      )) as StoryShareParamsExternal;
+      createJSInteropWrapper<_StoryShareParamsExport>(
+            _StoryShareParamsExport(text: text, widgetLink: widgetLink?._toExt),
+          )
+          as StoryShareParamsExternal;
 }
 
 @JSExport()
@@ -37,7 +34,7 @@ class _StoryShareParamsExport {
   StoryWidgetLinkExternal? widget_link;
 
   _StoryShareParamsExport({this.text, StoryWidgetLinkExternal? widgetLink})
-      : widget_link = widgetLink;
+    : widget_link = widgetLink;
 }
 
 extension type StoryShareParamsExternal(JSObject _) implements JSObject {

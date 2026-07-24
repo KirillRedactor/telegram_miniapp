@@ -24,7 +24,9 @@ external double get _gamma;
 
 @JS("$_deviceOrientationPath.start")
 external void _start(
-    DeviceOrientationStartParamsExternal params, JSFunction? callback);
+  DeviceOrientationStartParamsExternal params,
+  JSFunction? callback,
+);
 
 @JS("$_deviceOrientationPath.stop")
 external void _stop(JSFunction? callback);
@@ -38,27 +40,19 @@ class DeviceOrientation {
   double get beta => _beta;
   double get gamma => _gamma;
 
-  void start(
-          {required DeviceOrientationStartParams params,
-          void Function(bool result)? callback}) =>
-      _start(params._toExt, callback?.toJS);
-
-  Future<bool> startAsync(
-      {required DeviceOrientationStartParams params}) async {
-    Completer<bool> completer = Completer();
+  Future<bool> start({required DeviceOrientationStartParams params}) {
+    final completer = Completer<bool>();
     void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _start(params._toExt, callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
-  void stop({void Function(bool result)? callback}) => _stop(callback?.toJS);
-
-  Future<bool> stopAsync() async {
-    Completer<bool> completer = Completer();
+  Future<bool> stop() {
+    final completer = Completer<bool>();
     void callback(JSBoolean result) => completer.complete(result.toDart);
 
     _stop(callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 }

@@ -7,10 +7,11 @@ class DeviceOrientationStartParams {
   // ignore: non_constant_identifier_names
   bool need_absolute;
 
-  DeviceOrientationStartParams(
-      {int refreshRate = 1000, bool needAbsolute = false})
-      : refresh_rate = refreshRate,
-        need_absolute = needAbsolute;
+  DeviceOrientationStartParams({
+    int refreshRate = 1000,
+    bool needAbsolute = false,
+  }) : refresh_rate = refreshRate,
+       need_absolute = needAbsolute;
 
   DeviceOrientationStartParamsExternal get _toExt =>
       createJSInteropWrapper<DeviceOrientationStartParams>(this)

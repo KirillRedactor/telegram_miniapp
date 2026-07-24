@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import '../../flutter_telegram_miniapp.dart';
+import '../internal/js_async.dart';
 
 const _deviceStoragePath = "$webAppPath.DeviceStorage";
 
@@ -23,104 +24,44 @@ external void _clear(JSFunction? callback);
 /// to the bot that created it. Each bot can store up to **5 MB per user** using this storage.
 ///
 /// [API Reference](https://core.telegram.org/bots/webapps#devicestorage)
-class CloudStorage {
-  /// `Bot API 9.0+` A method that stores a value in the device's local storage
-  /// using the specified key. If an optional callback parameter was passed,
-  /// the *callback* function will be called. In case of an error, the first
-  /// argument will contain the error. In case of success, the first argument
-  /// will be null and the second argument will be a boolean indicating whether
-  /// the value was stored.
+class DeviceStorage {
+  /// `Bot API 9.0+` Stores the [value] under the given [key]. Returns whether
+  /// the value was stored. Throws a [TelegramMiniAppException] if the operation
+  /// fails.
   ///
   /// [API Reference](https://core.telegram.org/bots/webapps#devicestorage)
-  void setItem(
-      {required String key,
-      required String value,
-      void Function(bool result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      if (callback != null) callback(result?.toDart ?? false);
-    }
+  Future<bool> setItem({required String key, required String value}) =>
+      completeNodeCallback(
+        (result) => (result as JSBoolean?)?.toDart ?? false,
+        (callback) => _setItem(key.toJS, value.toJS, callback),
+      );
 
-    return _setItem(key.toJS, value.toJS, callbackFunction.toJS);
-  }
-
-  /// `Bot API 9.0+` A method that stores a value in the device's local storage
-  /// using the specified key. If an optional callback parameter was passed,
-  /// the *callback* function will be called. In case of an error, the first
-  /// argument will contain the error. In case of success, the first argument
-  /// will be null and the second argument will be a boolean indicating whether
-  /// the value was stored.
+  /// `Bot API 9.0+` Returns the value stored under [key], or `null` if it is
+  /// absent. Throws a [TelegramMiniAppException] if the operation fails.
   ///
   /// [API Reference](https://core.telegram.org/bots/webapps#devicestorage)
-  Future<bool> setItemAsync(
-      {required String key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      completer.complete(result?.toDart ?? false);
-    }
+  Future<String?> getItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSString?)?.toDart,
+    (callback) => _getItem(key.toJS, callback),
+  );
 
-    _setItem(key.toJS, value.toJS, callback.toJS);
-    return await completer.future;
-  }
+  /// `Bot API 9.0+` Removes the value stored under [key]. Returns whether the
+  /// value was removed. Throws a [TelegramMiniAppException] if the operation
+  /// fails.
+  ///
+  /// [API Reference](https://core.telegram.org/bots/webapps#devicestorage)
+  Future<bool> removeItem({required String key}) => completeNodeCallback(
+    (result) => (result as JSBoolean?)?.toDart ?? false,
+    (callback) => _removeItem(key.toJS, callback),
+  );
 
-  void getItem(
-      {required String key, required void Function(String? result) callback}) {
-    void callbackFunction(JSString? error, JSString? result) {
-      callback(result?.toDart);
-    }
-
-    _getItem(
-      key.toJS,
-      callbackFunction.toJS,
-    );
-  }
-
-  Future<String?> getItemAsync({required String key}) async {
-    Completer<String?> completer = Completer();
-    void callback(JSString? error, JSString? result) {
-      completer.complete(result?.toDart);
-    }
-
-    _getItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void removeItem(
-      {required String key, void Function(bool? result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      if (callback != null) callback(result?.toDart);
-    }
-
-    _removeItem(key.toJS, callbackFunction.toJS);
-  }
-
-  Future<bool> removeItemAsync(
-      {required String key, required String value}) async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      completer.complete(result?.toDart ?? false);
-    }
-
-    _removeItem(key.toJS, callback.toJS);
-    return await completer.future;
-  }
-
-  void clear({required void Function(bool? result)? callback}) {
-    void callbackFunction(JSString? error, JSBoolean? result) {
-      if (callback != null) {
-        callback(result?.toDart);
-      }
-    }
-
-    _clear(callbackFunction.toJS);
-  }
-
-  Future<bool> clearAsync() async {
-    Completer<bool> completer = Completer();
-    void callback(JSString? error, JSBoolean? result) {
-      completer.complete(result?.toDart ?? false);
-    }
-
-    _clear(callback.toJS);
-    return await completer.future;
-  }
+  /// `Bot API 9.0+` Removes all values stored for the current user. Returns
+  /// whether the storage was cleared. Throws a [TelegramMiniAppException] if
+  /// the operation fails.
+  ///
+  /// [API Reference](https://core.telegram.org/bots/webapps#devicestorage)
+  Future<bool> clear() => completeNodeCallback(
+    (result) => (result as JSBoolean?)?.toDart ?? false,
+    (callback) => _clear(callback),
+  );
 }

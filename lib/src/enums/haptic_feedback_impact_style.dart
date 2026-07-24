@@ -1,7 +1,1 @@
-enum HapticFeedbackImpactStyle {
-  light,
-  medium,
-  heavy,
-  rigid,
-  soft;
-}
+enum HapticFeedbackImpactStyle { light, medium, heavy, rigid, soft }

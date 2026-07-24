@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0
+
+* **Breaking:** Unified the asynchronous API. The callback-based methods and their `*Async` counterparts have been merged into single `Future`-returning methods (e.g. `setItem`, `getItem`, `getItems`, `removeItem`, `removeItems`, `getKeys`, `showPopup`, `openInvoice`, `requestContact`, `init`, `requestAccess`, `authenticate`, `updateBiometricToken`).
+* **Breaking:** Errors reported by the Telegram client are no longer silently ignored. Failing methods now complete with a `TelegramMiniAppException` instead of returning a default value.
+* Added the `TelegramMiniAppException` class to the public API.
+* Exported the `DeviceStorage` and `SecureStorage` types.
+* Raised the minimum Dart SDK constraint to `^3.12.2`.
+* Reformatted the codebase and refreshed the example and documentation to use the new async API.
+
 ## 0.0.12
 
 * Fixed error with `haptic_feedback` with `impactOccurred` and `notificationOccurred` (Issue [#18](https://github.com/KirillRedactor/telegram_miniapp/issues/18))

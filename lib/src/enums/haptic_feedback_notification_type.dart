@@ -1,5 +1,1 @@
-enum HapticFeedbackNotificationType {
-  error,
-  success,
-  warning;
-}
+enum HapticFeedbackNotificationType { error, success, warning }

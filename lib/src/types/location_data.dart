@@ -27,16 +27,16 @@ class LocationData {
 
   // ignore: library_private_types_in_public_api
   factory LocationData.fromExternal(LocationDataExternal ext) => LocationData._(
-        latitude: ext.latitude,
-        longitude: ext.longitude,
-        altitude: ext.altitude,
-        course: ext.course,
-        speed: ext.speed,
-        horizontalAccuracy: ext.horizontal_accuracy,
-        verticalAccuracy: ext.vertical_accuracy,
-        courseAccuracy: ext.course_accuracy,
-        speedAccuracy: ext.speed_accuracy,
-      );
+    latitude: ext.latitude,
+    longitude: ext.longitude,
+    altitude: ext.altitude,
+    course: ext.course,
+    speed: ext.speed,
+    horizontalAccuracy: ext.horizontal_accuracy,
+    verticalAccuracy: ext.vertical_accuracy,
+    courseAccuracy: ext.course_accuracy,
+    speedAccuracy: ext.speed_accuracy,
+  );
 
   // LocationDataExternal get _toExt =>
   //     createJSInteropWrapper<LocationData>(this) as LocationDataExternal;

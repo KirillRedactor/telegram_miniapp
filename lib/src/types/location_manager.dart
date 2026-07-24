@@ -37,29 +37,21 @@ class LocationManager {
 
   bool get isAccessGranted => _isAccessGranted;
 
-  void init({void Function()? callback}) => _init(callback?.toJS);
-  Future<bool> initAsync() async {
-    Completer<bool> completer = Completer();
+  Future<bool> init() {
+    final completer = Completer<bool>();
     void callback() => completer.complete(true);
 
     _init(callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
-  void getLocation(
-      {required void Function(LocationData locationData) callback}) {
-    void callbackFunction(LocationDataExternal ext) =>
-        callback(LocationData.fromExternal(ext));
-    _getLocation(callbackFunction.toJS);
-  }
-
-  Future<LocationData> getLocationAsync() async {
-    Completer<LocationData> completer = Completer();
+  Future<LocationData> getLocation() {
+    final completer = Completer<LocationData>();
     void callback(LocationDataExternal ext) =>
         completer.complete(LocationData.fromExternal(ext));
 
     _getLocation(callback.toJS);
-    return await completer.future;
+    return completer.future;
   }
 
   void openSettings() => _openSettings();
